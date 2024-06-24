@@ -1,14 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+// clsx
 import clsx from 'clsx';
-
+// mui
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import EyeIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import CommentIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
-
+// scss
 import styles from './Post.module.scss';
+// components
 import { UserInfo } from '../UserInfo';
 import { PostSkeleton } from './Skeleton';
 
@@ -62,7 +64,7 @@ export const Post = ({
             {isFullPost ? title : <Link to={`/posts/${id}`}>{title}</Link>}
           </h2>
           <ul className={styles.tags}>
-            {tags.map((name) => (
+            {tags?.map((name) => (
               <li key={name}>
                 <Link to={`/tag/${name}`}>#{name}</Link>
               </li>

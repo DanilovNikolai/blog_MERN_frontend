@@ -10,17 +10,20 @@ import axios from 'axios';
 export const FullPost = () => {
   const [data, setData] = useState();
   const [isLoading, setLoading] = useState(true);
-  const { id } = useParams();
+  const params = useParams();
 
   useEffect(() => {
     axios
-      .get(`/posts/${id}`)
-      .then((res) => setData(res.data))
+      .get(`/posts/${params.id}`)
+      .then((res) => {
+        setData(res.data);
+        setLoading(false);
+      })
       .catch((err) => {
         console.warn(err);
         alert('Ошибка при получении статьи');
       });
-  }, []);
+  }, [params.id]);
 
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost />;
@@ -29,17 +32,17 @@ export const FullPost = () => {
   return (
     <>
       <Post
-        id={data._id}
-        title={data.title}
-        imageUrl="https://res.cloudinary.com/practicaldev/image/fetch/s--UnAfrEG8--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/icohm5g0axh9wjmu4oc3.png"
-        user={data.user}
-        createdAt={data.createdAt}
-        viewsCount={data.viewsCount}
+        id={data?._id}
+        title={data?.title}
+        imageUrl={data?.imageUrl}
+        user={data?.user}
+        createdAt={data?.createdAt}
+        viewsCount={data?.viewsCount}
         commentsCount={3}
-        tags={data.tags}
+        tags={data?.tags}
         isFullPost
       >
-        <p>{data.text}</p>
+        <p>{data?.text}</p>
       </Post>
       <CommentsBlock
         items={[

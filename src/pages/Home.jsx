@@ -9,7 +9,7 @@ import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPosts, fetchTags } from '../redux/slices/posts';
+import { fetchPosts, fetchTags } from '../redux/slices/postsSlice';
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ export const Home = () => {
   useEffect(() => {
     dispatch(fetchPosts());
     dispatch(fetchTags());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
@@ -35,20 +35,25 @@ export const Home = () => {
       </Tabs>
       <Grid container spacing={4}>
         <Grid xs={8} item>
-          {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) => (
-            <Post
-              id={obj?._id}
-              title={obj?.title}
-              imageUrl={obj?.imageUrl}
-              user={obj?.user}
-              createdAt={obj?.createdAt}
-              viewsCount={obj?.viewsCount}
-              commentsCount={3}
-              tags={obj?.tags}
-              isLoading={isPostsLoading}
-              isEditable
-            />
-          ))}
+          {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) =>
+            isPostsLoading ? (
+              <Post key={index} isLoading={true} />
+            ) : (
+              <Post
+                key={index}
+                id={obj._id}
+                title={obj.title}
+                imageUrl={obj.imageUrl}
+                user={obj.user}
+                createdAt={obj.createdAt}
+                viewsCount={obj.viewsCount}
+                commentsCount={3}
+                tags={obj.tags}
+                isLoading={isPostsLoading}
+                isEditable
+              />
+            )
+          )}
         </Grid>
         <Grid xs={4} item>
           <TagsBlock items={tags.items} isLoading={isTagsLoading} />
