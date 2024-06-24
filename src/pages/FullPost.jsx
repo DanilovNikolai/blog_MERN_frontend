@@ -5,10 +5,10 @@ import { Post } from '../components/Post';
 import { AddComment } from '../components/AddComment';
 import { CommentsBlock } from '../components/CommentsBlock';
 // axios
-import axios from 'axios';
+import axios from '../axios';
 
 export const FullPost = () => {
-  const [data, setData] = useState();
+  const [data, setData] = useState({});
   const [isLoading, setLoading] = useState(true);
   const params = useParams();
 
@@ -32,17 +32,17 @@ export const FullPost = () => {
   return (
     <>
       <Post
-        id={data?._id}
-        title={data?.title}
-        imageUrl={data?.imageUrl}
-        user={data?.user}
-        createdAt={data?.createdAt}
-        viewsCount={data?.viewsCount}
+        id={data._id}
+        title={data.title}
+        imageUrl={data.imageUrl}
+        user={data.user}
+        createdAt={data.createdAt}
+        viewsCount={data.viewsCount}
         commentsCount={3}
-        tags={data?.tags}
+        tags={data.tags}
         isFullPost
       >
-        <p>{data?.text}</p>
+        <p>{data.text}</p>
       </Post>
       <CommentsBlock
         items={[
