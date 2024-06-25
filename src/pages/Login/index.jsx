@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 // router
 import { Navigate } from 'react-router-dom';
 // mui
@@ -34,8 +34,16 @@ export const Login = () => {
 
   // выполняется только тогда, когда валидация прошла успешно
   // передаем данные пользователя на бэкенд
-  const onSubmit = (values) => {
-    dispatch(fetchAuth(values));
+  const onSubmit = async (values) => {
+    const data = await dispatch(fetchAuth(values));
+
+    if (!data.payload) {
+      return alert('Не удалось авторизоваться');
+    }
+
+    if ('token' in data.payload) {
+      localStorage.setItem('token', data.payload.token);
+    }
   };
 
   if (isAuth) {
