@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 // mui
 import Container from '@mui/material/Container';
 // routes
@@ -6,8 +7,18 @@ import { Routes, Route } from 'react-router-dom';
 import { Header } from './components';
 // pages
 import { Home, FullPost, Registration, AddPost, Login } from './pages';
+// redux-toolkit
+import { useDispatch, useSelector } from 'react-redux';
+import { selectIsAuth, fetchAuthMe } from './redux/slices/authSlice';
 
 function App() {
+  const isAuth = useSelector(selectIsAuth);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAuthMe());
+  }, []);
+
   return (
     <>
       <Header />
