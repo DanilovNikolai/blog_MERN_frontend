@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 // router
 import { Navigate } from 'react-router-dom';
 // mui

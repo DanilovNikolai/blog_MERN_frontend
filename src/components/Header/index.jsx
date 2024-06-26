@@ -44,10 +44,10 @@ export const Header = () => {
               </>
             ) : (
               <>
-                <Link to="/login">
+                <Link to="/auth/login">
                   <Button variant="outlined">Войти</Button>
                 </Link>
-                <Link to="/register">
+                <Link to="/auth/register">
                   <Button variant="contained">Создать аккаунт</Button>
                 </Link>
               </>
