@@ -1,6 +1,6 @@
 import React from 'react';
 // router
-import { Navigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 // mui
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
@@ -24,6 +24,7 @@ export const AddPost = () => {
   const [tags, setTags] = React.useState('');
   const [imageUrl, setImageUrl] = React.useState('');
   const inputFileRef = React.useRef(null);
+  const navigate = useNavigate();
 
   const handleChangeFile = async (event) => {
     try {
@@ -40,6 +41,28 @@ export const AddPost = () => {
 
   const onClickRemoveImage = () => {
     setImageUrl(null);
+  };
+
+  const onSubmit = async () => {
+    try {
+      setLoading(true);
+
+      const fields = {
+        title,
+        text,
+        tags: tags.split(','),
+        imageUrl,
+      };
+
+      const { data } = await axios.post('/posts', fields);
+
+      const id = data._id;
+
+      navigate(`/posts/${id}`);
+    } catch (err) {
+      console.warn(err);
+      alert('Ошибка при создании статьи');
+    }
   };
 
   // управляемый текст в редакторе текста, обязательно с исп. useCallback
@@ -123,7 +146,7 @@ export const AddPost = () => {
         options={options}
       />
       <div className={styles.buttons}>
-        <Button size="large" variant="contained">
+        <Button onClick={onSubmit} size="large" variant="contained">
           Опубликовать
         </Button>
         <a href="/">
