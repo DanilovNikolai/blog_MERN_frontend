@@ -13,17 +13,34 @@ import styles from './AddPost.module.scss';
 // redux-toolkit
 import { selectIsAuth } from '../../redux/slices/authSlice';
 import { useSelector } from 'react-redux';
+// axios
+import axios from '../../axios';
 
 export const AddPost = () => {
-  const imageUrl = '';
   const isAuth = useSelector(selectIsAuth);
+  const [isLoading, setLoading] = React.useState(false);
   const [text, setText] = React.useState('');
   const [title, setTitle] = React.useState('');
   const [tags, setTags] = React.useState('');
+  const [imageUrl, setImageUrl] = React.useState('');
+  const inputFileRef = React.useRef(null);
 
-  const handleChangeFile = () => {};
+  const handleChangeFile = async (event) => {
+    try {
+      const formData = new FormData(); // для загрузки изображений на бэк-енд
+      const file = event.target.files[0];
+      formData.append('image', file);
+      const { data } = await axios.post('/upload', formData);
+      setImageUrl(data.url);
+    } catch (err) {
+      console.warn(err);
+      alert('Ошибка при загрузке файла');
+    }
+  };
 
-  const onClickRemoveImage = () => {};
+  const onClickRemoveImage = () => {
+    setImageUrl(null);
+  };
 
   // управляемый текст в редакторе текста, обязательно с исп. useCallback
   const onChange = React.useCallback((value) => {
@@ -50,25 +67,36 @@ export const AddPost = () => {
     return <Navigate to="/" />;
   }
 
-  console.log({ title, text, tags });
-
   return (
     <Paper style={{ padding: 30 }}>
-      <Button variant="outlined" size="large">
+      <Button
+        onClick={() => inputFileRef.current.click()}
+        variant="outlined"
+        size="large"
+      >
         Загрузить превью
       </Button>
-      <input type="file" onChange={handleChangeFile} hidden />
+      <input
+        ref={inputFileRef}
+        type="file"
+        onChange={handleChangeFile}
+        hidden
+      />
       {imageUrl && (
-        <Button variant="contained" color="error" onClick={onClickRemoveImage}>
-          Удалить
-        </Button>
-      )}
-      {imageUrl && (
-        <img
-          className={styles.image}
-          src={`http://localhost:4444${imageUrl}`}
-          alt="Uploaded"
-        />
+        <>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={onClickRemoveImage}
+          >
+            Удалить
+          </Button>
+          <img
+            className={styles.image}
+            src={`http://localhost:4444${imageUrl}`}
+            alt="Uploaded"
+          />
+        </>
       )}
       <br />
       <br />
