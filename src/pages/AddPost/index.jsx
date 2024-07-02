@@ -1,6 +1,6 @@
-import React from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 // router
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate, Navigate, useParams } from 'react-router-dom';
 // mui
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
@@ -17,14 +17,17 @@ import { useSelector } from 'react-redux';
 import axios from '../../axios';
 
 export const AddPost = () => {
-  const isAuth = useSelector(selectIsAuth);
-  const [isLoading, setLoading] = React.useState(false);
-  const [text, setText] = React.useState('');
-  const [title, setTitle] = React.useState('');
-  const [tags, setTags] = React.useState('');
-  const [imageUrl, setImageUrl] = React.useState('');
-  const inputFileRef = React.useRef(null);
+  const { id } = useParams();
   const navigate = useNavigate();
+  const isAuth = useSelector(selectIsAuth);
+  const [isLoading, setLoading] = useState(false);
+  const [text, setText] = useState('');
+  const [title, setTitle] = useState('');
+  const [tags, setTags] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
+  const inputFileRef = useRef(null);
+
+  const isEditing = !!id;
 
   const handleChangeFile = async (event) => {
     try {
@@ -50,15 +53,17 @@ export const AddPost = () => {
       const fields = {
         title,
         text,
-        tags: tags.split(','),
+        tags,
         imageUrl,
       };
 
-      const { data } = await axios.post('/posts', fields);
+      const { data } = isEditing
+        ? await axios.patch(`/posts/${id}`, fields)
+        : await axios.post('/posts', fields);
 
-      const id = data._id;
+      const _id = isEditing ? id : data._id;
 
-      navigate(`/posts/${id}`);
+      navigate(`/posts/${_id}`);
     } catch (err) {
       console.warn(err);
       alert('Ошибка при создании статьи');
@@ -66,12 +71,12 @@ export const AddPost = () => {
   };
 
   // управляемый текст в редакторе текста, обязательно с исп. useCallback
-  const onChange = React.useCallback((value) => {
+  const onChange = useCallback((value) => {
     setText(value);
   }, []);
 
   // настройки редактора текста, обязательно с исп. useMemo
-  const options = React.useMemo(
+  const options = useMemo(
     () => ({
       spellChecker: false,
       maxHeight: '400px',
@@ -85,6 +90,23 @@ export const AddPost = () => {
     }),
     []
   );
+
+  useEffect(() => {
+    if (id) {
+      axios
+        .get(`/posts/${id}`)
+        .then(({ data }) => {
+          setTitle(data.title);
+          setText(data.text);
+          setImageUrl(data.imageUrl);
+          setTags(data.tags.join(','));
+        })
+        .catch((err) => {
+          console.warn(err);
+          alert('Ошибка при получении статьи');
+        });
+    }
+  }, []);
 
   if (!localStorage.getItem('token') && !isAuth) {
     return <Navigate to="/" />;
@@ -147,7 +169,7 @@ export const AddPost = () => {
       />
       <div className={styles.buttons}>
         <Button onClick={onSubmit} size="large" variant="contained">
-          Опубликовать
+          {isEditing ? 'Сохранить' : 'Опубликовать'}
         </Button>
         <a href="/">
           <Button size="large">Отмена</Button>

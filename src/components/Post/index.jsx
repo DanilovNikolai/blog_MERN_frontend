@@ -13,6 +13,9 @@ import styles from './Post.module.scss';
 // components
 import { UserInfo } from '../UserInfo';
 import { PostSkeleton } from './Skeleton';
+// redux-toolkit
+import { useDispatch } from 'react-redux';
+import { fetchRemovePost } from '../../redux/slices/postsSlice';
 
 export const Post = ({
   id,
@@ -28,11 +31,17 @@ export const Post = ({
   isLoading,
   isEditable,
 }) => {
+  const dispatch = useDispatch();
+
   if (isLoading) {
     return <PostSkeleton />;
   }
 
-  const onClickRemove = () => {};
+  const onClickRemove = () => {
+    if (window.confirm('Вы действительно хотите удалить статью?')) {
+      dispatch(fetchRemovePost(id));
+    }
+  };
 
   return (
     <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
