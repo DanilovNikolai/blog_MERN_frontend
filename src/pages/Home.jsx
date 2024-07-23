@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 // mui
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -9,9 +9,15 @@ import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPosts, fetchTags } from '../redux/slices/postsSlice';
+import {
+  fetchPosts,
+  fetchTags,
+  fetchPostsByDate,
+  fetchPostsByViews,
+} from '../redux/slices/postsSlice';
 
 export const Home = () => {
+  const [tabValue, setTabValue] = useState(0);
   const dispatch = useDispatch();
   const { posts, tags } = useSelector((state) => state.posts);
   const userData = useSelector((state) => state.auth.userData);
@@ -24,12 +30,25 @@ export const Home = () => {
     dispatch(fetchTags());
   }, [dispatch]);
 
+  const handleTabChange = useCallback(
+    (event, newValue) => {
+      setTabValue(newValue);
+      if (newValue === 0) {
+        dispatch(fetchPostsByDate());
+      } else if (newValue === 1) {
+        dispatch(fetchPostsByViews());
+      }
+    },
+    [dispatch]
+  );
+
   return (
     <>
       <Tabs
         style={{ marginBottom: 15 }}
-        value={0}
+        value={tabValue}
         aria-label="basic tabs example"
+        onChange={handleTabChange}
       >
         <Tab label="Новые" />
         <Tab label="Популярные" />
