@@ -14,7 +14,7 @@ export const TagsBlock = ({ items, isLoading = true }) => {
   console.log(items);
 
   return (
-    <SideBlock title="Тэги">
+    <SideBlock title="Популярные тэги">
       <List>
         {(isLoading ? [...Array(5)] : items).map((name, index) => (
           <a

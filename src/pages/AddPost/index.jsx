@@ -25,6 +25,7 @@ export const AddPost = () => {
   const [title, setTitle] = useState('');
   const [tags, setTags] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+  const [error, setError] = useState(null);
   const inputFileRef = useRef(null);
 
   const isEditing = !!id;
@@ -46,9 +47,27 @@ export const AddPost = () => {
     setImageUrl(null);
   };
 
+  // Функция для проверки тегов на наличие недопустимых символов и пробелов после запятых
+  const validateTags = (tags) => {
+    const invalidTags = tags.split(',').filter((tag) => {
+      const trimmedTag = tag.trim();
+      return !/^[a-zA-Z0-9]+$/.test(trimmedTag) || tag !== trimmedTag;
+    });
+    return invalidTags.length === 0;
+  };
+
   const onSubmit = async () => {
+    // Проверка тегов на допустимость
+    if (!validateTags(tags)) {
+      setError(
+        'Теги могут содержать только латинские буквы и цифры без пробелов и специальных символов.'
+      );
+      return;
+    }
+
     try {
       setLoading(true);
+      setError(null);
 
       const fields = {
         title,
@@ -107,7 +126,7 @@ export const AddPost = () => {
           alert('Ошибка при получении статьи');
         });
     }
-  }, []);
+  }, [id]);
 
   if (!localStorage.getItem('token') && !isAuth) {
     return <Navigate to="/" />;
@@ -157,11 +176,12 @@ export const AddPost = () => {
       <TextField
         classes={{ root: styles.tags }}
         variant="standard"
-        placeholder="Тэги"
+        placeholder="Введите тэги через запятые без пробелов"
         value={tags}
         onChange={(e) => setTags(e.target.value)}
         fullWidth
       />
+      {error && <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>}
       <SimpleMDE
         className={styles.editor}
         value={text}
