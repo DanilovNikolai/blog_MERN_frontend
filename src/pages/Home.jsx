@@ -12,7 +12,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchPosts,
   fetchTags,
-  fetchPostsByDate,
   fetchPostsByViews,
 } from '../redux/slices/postsSlice';
 
@@ -30,17 +29,14 @@ export const Home = () => {
     dispatch(fetchTags());
   }, [dispatch]);
 
-  const handleTabChange = useCallback(
-    (event, newValue) => {
-      setTabValue(newValue);
-      if (newValue === 0) {
-        dispatch(fetchPostsByDate());
-      } else if (newValue === 1) {
-        dispatch(fetchPostsByViews());
-      }
-    },
-    [dispatch]
-  );
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+    if (newValue === 1) {
+      dispatch(fetchPostsByViews());
+    } else if (newValue === 0) {
+      dispatch(fetchPosts());
+    }
+  };
 
   return (
     <>
