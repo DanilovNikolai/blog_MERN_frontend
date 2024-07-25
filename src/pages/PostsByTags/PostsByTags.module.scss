@@ -1,0 +1,24 @@
+$blue: #4361ee;
+
+.root {
+  background-color: #def4e1;
+  border: 1px solid #dedede;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: 500;
+  .wrapper {
+    padding: 10px 20px 10px;
+    .content {
+      margin: 10px 0 10px;
+
+      span {
+        font-size: 22px;
+        font-style: italic;
+        line-height: 36px;
+        color: $blue;
+      }
+    }
+  }
+}
