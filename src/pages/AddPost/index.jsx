@@ -25,7 +25,9 @@ export const AddPost = () => {
   const [title, setTitle] = useState('');
   const [tags, setTags] = useState('');
   const [imageUrl, setImageUrl] = useState('');
-  const [error, setError] = useState(null);
+  const [errorTags, setErrorTags] = useState(null);
+  const [errorText, setErrorText] = useState(null);
+  const [errorTitle, setErrorTitle] = useState(null);
   const inputFileRef = useRef(null);
 
   const isEditing = !!id;
@@ -49,25 +51,31 @@ export const AddPost = () => {
 
   // Функция для проверки тегов на наличие недопустимых символов и пробелов после запятых
   const validateTags = (tags) => {
-    const invalidTags = tags.split(',').filter((tag) => {
-      const trimmedTag = tag.trim();
-      return !/^[a-zA-Z0-9]+$/.test(trimmedTag) || tag !== trimmedTag;
-    });
-    return invalidTags.length === 0;
+    return tags
+      .split(',')
+      .every((tag) => /^[a-zA-Z0-9]+$/.test(tag.trim()) && tag === tag.trim());
   };
 
   const onSubmit = async () => {
     // Проверка тегов на допустимость
     if (!validateTags(tags)) {
-      setError(
-        'Теги могут содержать только латинские буквы и цифры без пробелов и специальных символов.'
+      setErrorTags(
+        'Тэги могут содержать только латинские буквы и цифры без пробелов и специальных символов. Тэги разделяются между собой запятыми без пробелов.'
       );
+      return;
+    }
+    if (errorText?.length < 10) {
+      setErrorText('Текст должен содержать не менее 10 символов!');
+      return;
+    }
+    if (errorTitle?.length < 3) {
+      setErrorTitle('Заголовк должен содержать не менее 3 символов!');
       return;
     }
 
     try {
       setLoading(true);
-      setError(null);
+      setErrorTags(null);
 
       const fields = {
         title,
@@ -173,6 +181,9 @@ export const AddPost = () => {
         onChange={(e) => setTitle(e.target.value)}
         fullWidth
       />
+      {errorTitle && (
+        <div style={{ color: 'red', marginTop: '10px' }}>{errorTitle}</div>
+      )}
       <TextField
         classes={{ root: styles.tags }}
         variant="standard"
@@ -181,13 +192,18 @@ export const AddPost = () => {
         onChange={(e) => setTags(e.target.value)}
         fullWidth
       />
-      {error && <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>}
+      {errorTags && (
+        <div style={{ color: 'red', marginTop: '10px' }}>{errorTags}</div>
+      )}
       <SimpleMDE
         className={styles.editor}
         value={text}
         onChange={onChange}
         options={options}
       />
+      {errorText && (
+        <div style={{ color: 'red', marginTop: '10px' }}>{errorText}</div>
+      )}
       <div className={styles.buttons}>
         <Button onClick={onSubmit} size="large" variant="contained">
           {isEditing ? 'Сохранить' : 'Опубликовать'}

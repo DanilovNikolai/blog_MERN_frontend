@@ -6,7 +6,7 @@ import { Routes, Route } from 'react-router-dom';
 // components
 import { Header } from './components';
 // pages
-import { Home, FullPost, Registration, AddPost, Login } from './pages';
+import { Home, FullPost, Registration, AddPost, Login, PostsByTags } from './pages';
 // redux-toolkit
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsAuth, fetchAuthMe } from './redux/slices/authSlice';
@@ -29,6 +29,7 @@ function App() {
           <Route path="/posts/create" element={<AddPost />} />
           <Route path="/auth/login" element={<Login />} />
           <Route path="/auth/register" element={<Registration />} />
+          <Route path="/tags/:tag" element={<PostsByTags />} />
         </Routes>
       </Container>
     </>
