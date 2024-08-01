@@ -27,11 +27,39 @@
 }
 
 .buttons {
+  display: flex;
   button {
     margin-left: 10px;
   }
 
   a {
     text-decoration: none;
+  }
+}
+
+.userContainer {
+  color: #4361ee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 10px;
+  border-radius: 5px;
+
+  .avatarContainer {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    .avatar {
+      max-width: 35px;
+      max-height: 35px;
+      border-radius: 30px;
+      margin-right: 15px;
+    }
+  }
+
+  .userName {
+    font-weight: 500;
+    font-size: 14px;
   }
 }
