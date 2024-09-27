@@ -6,6 +6,8 @@ import { AddComment } from '../components/AddComment';
 import { CommentsBlock } from '../components/CommentsBlock';
 // axios
 import axios from '../axios';
+// redux
+import { useSelector } from 'react-redux';
 // ReactMarkdown
 import ReactMarkdown from 'react-markdown';
 
@@ -13,6 +15,7 @@ export const FullPost = () => {
   const [data, setData] = useState({});
   const [isLoading, setLoading] = useState(true);
   const params = useParams();
+  const userData = useSelector((state) => state.auth.userData);
 
   useEffect(() => {
     axios
@@ -65,7 +68,7 @@ export const FullPost = () => {
         ]}
         isLoading={false}
       >
-        <AddComment />
+        <AddComment user={userData}/>
       </CommentsBlock>
     </>
   );
