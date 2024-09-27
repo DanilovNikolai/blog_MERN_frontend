@@ -14,10 +14,13 @@ export const fetchPostsByViews = createAsyncThunk(
   }
 );
 
-export const fetchPostsByTags = createAsyncThunk('posts/fetchPostsByTags', async (tag) => {
-  const { data } = await axios.get(`/tags/${tag}`);
-  return data;
-});
+export const fetchPostsByTags = createAsyncThunk(
+  'posts/fetchPostsByTags',
+  async (tag) => {
+    const { data } = await axios.get(`/tags/${tag}`);
+    return data;
+  }
+);
 
 export const fetchTags = createAsyncThunk('posts/fetchTags', async () => {
   const { data } = await axios.get('/tags');

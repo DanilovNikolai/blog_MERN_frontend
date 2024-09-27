@@ -12,7 +12,8 @@ import { useSelector } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 
 export const FullPost = () => {
-  const [data, setData] = useState({});
+  const [postsData, setPostsData] = useState({});
+  const [commentsData, setCommentsData] = useState({});
   const [isLoading, setLoading] = useState(true);
   const params = useParams();
   const userData = useSelector((state) => state.auth.userData);
@@ -21,12 +22,23 @@ export const FullPost = () => {
     axios
       .get(`/posts/${params.id}`)
       .then((res) => {
-        setData(res.data);
+        setPostsData(res.data);
         setLoading(false);
       })
       .catch((err) => {
         console.warn(err);
         alert('Ошибка при получении статьи');
+      });
+
+    axios
+      .get(`/posts/${params.id}/comments`)
+      .then((res) => {
+        setCommentsData(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.warn(err);
+        alert('Ошибка при получении комментариев');
       });
   }, [params.id]);
 
@@ -37,38 +49,26 @@ export const FullPost = () => {
   return (
     <>
       <Post
-        id={data._id}
-        title={data.title}
-        imageUrl={data.imageUrl ? `http://localhost:4444${data.imageUrl}` : ''}
-        user={data.user}
-        createdAt={data.createdAt}
-        viewsCount={data.viewsCount}
+        id={postsData._id}
+        title={postsData.title}
+        imageUrl={
+          postsData.imageUrl ? `http://localhost:4444${postsData.imageUrl}` : ''
+        }
+        user={postsData.user}
+        createdAt={postsData.createdAt}
+        viewsCount={postsData.viewsCount}
         commentsCount={3}
-        tags={data.tags}
+        tags={postsData.tags}
         isFullPost
       >
-        <ReactMarkdown children={data.text} />
+        <ReactMarkdown children={postsData.text} />
       </Post>
       <CommentsBlock
-        items={[
-          {
-            user: {
-              fullName: 'Вася Пупкин',
-              avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
-            },
-            text: 'Это тестовый комментарий 555555',
-          },
-          {
-            user: {
-              fullName: 'Иван Иванов',
-              avatarUrl: 'https://mui.com/static/images/avatar/2.jpg',
-            },
-            text: 'When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top',
-          },
-        ]}
+        comments={commentsData}
+        postId={params.id}
         isLoading={false}
       >
-        <AddComment user={userData}/>
+        <AddComment user={userData} />
       </CommentsBlock>
     </>
   );
