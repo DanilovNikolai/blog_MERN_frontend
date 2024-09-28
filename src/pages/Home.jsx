@@ -15,6 +15,8 @@ import {
   fetchPostsByViews,
 } from '../redux/slices/postsSlice';
 import { fetchComments } from '../redux/slices/commentsSlice';
+// utils
+import { formatDate } from '../utils/formatDate';
 
 export const Home = () => {
   const [tabValue, setTabValue] = useState(0);
@@ -66,7 +68,7 @@ export const Home = () => {
                   obj.imageUrl ? `http://localhost:4444${obj.imageUrl}` : ''
                 }
                 user={obj.user}
-                createdAt={obj.createdAt}
+                createdAt={formatDate(obj.createdAt)}
                 viewsCount={obj.viewsCount}
                 commentsCount={
                   comments.items?.filter(

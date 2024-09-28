@@ -10,6 +10,8 @@ import List from '@mui/material/List';
 import Skeleton from '@mui/material/Skeleton';
 // router
 import { useLocation } from 'react-router-dom';
+// utils
+import { formatDate } from '../utils/formatDate';
 
 export const CommentsBlock = ({
   comments = [],
@@ -60,6 +62,9 @@ export const CommentsBlock = ({
                 />
               )}
             </ListItem>
+            <div style={{ textAlign: 'right', marginRight: '15px', marginBottom: '5px' }}>
+              <ListItemText secondary={formatDate(comment.createdAt)} />
+            </div>
             <Divider variant="inset" component="li" />
           </React.Fragment>
         ))}

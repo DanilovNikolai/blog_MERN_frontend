@@ -11,6 +11,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchComments } from '../redux/slices/commentsSlice';
 // ReactMarkdown
 import ReactMarkdown from 'react-markdown';
+// utils
+import { formatDate } from '../utils/formatDate';
 
 export const FullPost = () => {
   const dispatch = useDispatch();
@@ -58,9 +60,9 @@ export const FullPost = () => {
           postsData.imageUrl ? `http://localhost:4444${postsData.imageUrl}` : ''
         }
         user={postsData.user}
-        createdAt={postsData.createdAt}
-        viewsCount={postsData.viewsCount}
-        commentsCount={filteredComments.length}
+        createdAt={formatDate(postsData.createdAt)}
+        viewsCount={postsData.viewsCount} // Количество просмотров
+        commentsCount={filteredComments.length} // Количество комментариев
         tags={postsData.tags}
         isFullPost
       >
