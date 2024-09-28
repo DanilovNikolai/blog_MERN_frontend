@@ -9,19 +9,22 @@ import Button from '@mui/material/Button';
 // axios
 import axios from '../../axios';
 
-export const AddComment = ({ user }) => {
+export const AddComment = ({ user, onAddComment }) => {
   const [inputText, setInputText] = useState('');
   const params = useParams();
 
   const handleButtonPost = async () => {
     try {
-      axios.post('/comments', {
+      const response = await axios.post('/comments', {
         fullName: user.fullName,
         userId: user._id,
         postId: params.id,
         text: inputText,
         avatarUrl: user.avatarUrl,
       });
+
+      // Вызываем функцию для обновления комментариев
+      onAddComment(response.data);
       setInputText('');
     } catch (err) {
       console.log(err);
