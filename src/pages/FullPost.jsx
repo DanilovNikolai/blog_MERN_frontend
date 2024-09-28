@@ -7,25 +7,27 @@ import { CommentsBlock } from '../components/CommentsBlock';
 // axios
 import axios from '../axios';
 // redux
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchComments } from '../redux/slices/commentsSlice';
 // ReactMarkdown
 import ReactMarkdown from 'react-markdown';
 
 export const FullPost = () => {
+  const dispatch = useDispatch();
   const [postsData, setPostsData] = useState({});
-  const [commentsData, setCommentsData] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const params = useParams();
+  const { comments } = useSelector((state) => state.comments);
   const userData = useSelector((state) => state.auth.userData);
+  const filteredComments = comments.items?.filter(
+    (comment) => comment.postId === params.id
+  );
 
   // Используем useCallback для мемоизации функции запроса данных
   const fetchPostData = useCallback(async () => {
     try {
       const posts = await axios.get(`/posts/${params.id}`);
-      const comments = await axios.get(`/posts/${params.id}/comments`);
-
       setPostsData(posts.data);
-      setCommentsData(comments.data);
       setLoading(false);
     } catch (err) {
       console.warn(err);
@@ -35,6 +37,10 @@ export const FullPost = () => {
   }, [params.id]);
 
   useEffect(() => {
+    dispatch(fetchComments());
+  }, [dispatch]);
+
+  useEffect(() => {
     setLoading(true);
     fetchPostData();
   }, [fetchPostData]);
@@ -42,11 +48,6 @@ export const FullPost = () => {
   if (isLoading) {
     return <Post isLoading={isLoading} isFullPost />;
   }
-
-  // Функция для обновления комментариев
-  const handleAddComment = (newComment) => {
-    setCommentsData((prevComments) => [newComment, ...prevComments]);
-  };
 
   return (
     <>
@@ -59,18 +60,18 @@ export const FullPost = () => {
         user={postsData.user}
         createdAt={postsData.createdAt}
         viewsCount={postsData.viewsCount}
-        commentsCount={commentsData.length}
+        commentsCount={filteredComments.length}
         tags={postsData.tags}
         isFullPost
       >
         <ReactMarkdown children={postsData.text} />
       </Post>
       <CommentsBlock
-        comments={commentsData}
+        comments={filteredComments} // Фильтруем комментарии по postId
         postId={params.id}
         isLoading={isLoading}
       >
-        <AddComment user={userData} onAddComment={handleAddComment}/>
+        <AddComment user={userData} />
       </CommentsBlock>
     </>
   );

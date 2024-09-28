@@ -14,19 +14,22 @@ import {
   fetchTags,
   fetchPostsByViews,
 } from '../redux/slices/postsSlice';
+import { fetchComments } from '../redux/slices/commentsSlice';
 
 export const Home = () => {
   const [tabValue, setTabValue] = useState(0);
   const dispatch = useDispatch();
   const { posts, tags } = useSelector((state) => state.posts);
+  const { comments } = useSelector((state) => state.comments);
   const userData = useSelector((state) => state.auth.userData);
 
   const isPostsLoading = posts.status === 'loading';
   const isTagsLoading = tags.status === 'loading';
-  
+
   useEffect(() => {
     dispatch(fetchPosts());
     dispatch(fetchTags());
+    dispatch(fetchComments());
   }, [dispatch]);
 
   const handleTabChange = (event, newValue) => {
@@ -65,7 +68,11 @@ export const Home = () => {
                 user={obj.user}
                 createdAt={obj.createdAt}
                 viewsCount={obj.viewsCount}
-                commentsCount={3}
+                commentsCount={
+                  comments.items?.filter(
+                    (comment) => comment.postId === obj._id
+                  ).length
+                }
                 tags={obj.tags}
                 isLoading={isPostsLoading}
                 isEditable={userData?._id === obj.user._id}
@@ -76,22 +83,7 @@ export const Home = () => {
         <Grid xs={4} item>
           <TagsBlock tags={tags.items} isLoading={isTagsLoading} />
           <CommentsBlock
-            items={[
-              {
-                user: {
-                  fullName: 'Вася Пупкин',
-                  avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
-                },
-                text: 'Это тестовый комментарий',
-              },
-              {
-                user: {
-                  fullName: 'Иван Иванов',
-                  avatarUrl: 'https://mui.com/static/images/avatar/2.jpg',
-                },
-                text: 'When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top',
-              },
-            ]}
+            comments={comments.items.slice(0, 5)} // Показываем последние 5 комментариев
             isLoading={false}
           />
         </Grid>

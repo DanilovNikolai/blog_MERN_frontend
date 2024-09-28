@@ -8,10 +8,14 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 // axios
 import axios from '../../axios';
+// redux
+import { useDispatch } from 'react-redux';
+import { addComment } from '../../redux/slices/commentsSlice.js';
 
-export const AddComment = ({ user, onAddComment }) => {
+export const AddComment = ({ user }) => {
   const [inputText, setInputText] = useState('');
   const params = useParams();
+  const dispatch = useDispatch();
 
   const handleButtonPost = async () => {
     try {
@@ -23,8 +27,8 @@ export const AddComment = ({ user, onAddComment }) => {
         avatarUrl: user.avatarUrl,
       });
 
-      // Вызываем функцию для обновления комментариев
-      onAddComment(response.data);
+      // Добавляем комментарий в Redux
+      dispatch(addComment(response.data));
       setInputText('');
     } catch (err) {
       console.log(err);
