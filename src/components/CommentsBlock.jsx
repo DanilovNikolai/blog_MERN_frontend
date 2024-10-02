@@ -46,7 +46,7 @@ export const CommentsBlock = ({
                 ) : (
                   <Avatar
                     alt={comment.fullName}
-                    src={`http://localhost:4444${comment.avatarUrl}`}
+                    src={`${process.env.REACT_APP_API_URL}${comment.avatarUrl}`}
                   />
                 )}
               </ListItemAvatar>

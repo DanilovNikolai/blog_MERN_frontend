@@ -42,7 +42,7 @@ export const AddComment = ({ user }) => {
           classes={{ root: styles.avatar }}
           src={
             user.avatarUrl
-              ? `http://localhost:4444${user.avatarUrl}`
+              ? `${process.env.REACT_APP_API_URL}${user.avatarUrl}`
               : '/noavatar.png'
           }
         />
