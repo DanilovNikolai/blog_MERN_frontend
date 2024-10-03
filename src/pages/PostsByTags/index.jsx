@@ -16,14 +16,20 @@ export const PostsByTags = () => {
   const { tag } = useParams();
   const userData = useSelector((state) => state.auth.userData);
   const { posts, tags } = useSelector((state) => state.posts);
+  const { comments } = useSelector((state) => state.comments);
   const dispatch = useDispatch();
+
+  // const filteredComments = comments.items?.filter(
+  //   (comment) => comment.postId === params.id
+  // );
 
   const isPostsLoading = posts.status === 'loading';
   const isTagsLoading = tags.status === 'loading';
 
   useEffect(() => {
     dispatch(fetchPostsByTags(tag));
-  }, [dispatch, tag]);
+    console.log(tags);
+  }, [dispatch, tag, tags]);
 
   return (
     <>
@@ -45,7 +51,9 @@ export const PostsByTags = () => {
                 id={obj._id}
                 title={obj.title}
                 imageUrl={
-                  obj.imageUrl ? `${process.env.REACT_APP_API_URL}${obj.imageUrl}` : ''
+                  obj.imageUrl
+                    ? `${process.env.REACT_APP_API_URL}${obj.imageUrl}`
+                    : '/noimage.png'
                 }
                 user={obj.user}
                 createdAt={obj.createdAt}
@@ -60,25 +68,7 @@ export const PostsByTags = () => {
         </Grid>
         <Grid xs={4} item>
           <TagsBlock tags={tags.items} isLoading={isTagsLoading} />
-          <CommentsBlock
-            items={[
-              {
-                user: {
-                  fullName: 'Вася Пупкин',
-                  avatarUrl: 'https://mui.com/static/images/avatar/1.jpg',
-                },
-                text: 'Это тестовый комментарий',
-              },
-              {
-                user: {
-                  fullName: 'Иван Иванов',
-                  avatarUrl: 'https://mui.com/static/images/avatar/2.jpg',
-                },
-                text: 'When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top',
-              },
-            ]}
-            isLoading={false}
-          />
+          <CommentsBlock comments={comments} isLoading={false} />
         </Grid>
       </Grid>
     </>

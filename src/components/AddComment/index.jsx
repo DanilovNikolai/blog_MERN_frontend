@@ -41,9 +41,8 @@ export const AddComment = ({ user }) => {
         <Avatar
           classes={{ root: styles.avatar }}
           src={
-            user?.avatarUrl
-              ? `${process.env.REACT_APP_API_URL}${user.avatarUrl}`
-              : '/noavatar.png'
+            user?.avatarUrl &&
+            `${process.env.REACT_APP_API_URL}${user.avatarUrl}`
           }
         />
         <div className={styles.form}>

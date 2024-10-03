@@ -64,18 +64,12 @@ export const Header = () => {
               <>
                 <div className={styles.userContainer}>
                   <div className={styles.avatarContainer}>
-                    <img
+                    <Avatar
                       onClick={() => inputFileRef.current.click()}
                       className={styles.avatar}
                       src={
-                        userData.avatarUrl ? (
-                          `${process.env.REACT_APP_API_URL}${userData.avatarUrl}`
-                        ) : (
-                          <Avatar
-                            alt={userData.fullName}
-                            src={`${process.env.REACT_APP_API_URL}${userData.avatarUrl}`}
-                          />
-                        )
+                        userData.avatarUrl &&
+                        `${process.env.REACT_APP_API_URL}${userData.avatarUrl}`
                       }
                       alt={userData.fullName}
                     />

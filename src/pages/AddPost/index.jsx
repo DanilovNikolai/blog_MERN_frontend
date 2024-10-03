@@ -20,7 +20,6 @@ export const AddPost = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const isAuth = useSelector(selectIsAuth);
-  const [isLoading, setLoading] = useState(false);
   const [text, setText] = useState('');
   const [title, setTitle] = useState('');
   const [tags, setTags] = useState('');
@@ -74,7 +73,6 @@ export const AddPost = () => {
     }
 
     try {
-      setLoading(true);
       setErrorTags(null);
 
       const fields = {
@@ -166,7 +164,11 @@ export const AddPost = () => {
           </Button>
           <img
             className={styles.image}
-            src={`${process.env.REACT_APP_API_URL}${imageUrl}`}
+            src={
+              imageUrl
+                ? `${process.env.REACT_APP_API_URL}${imageUrl}`
+                : 'http://localhost:3000/noimage.png'
+            }
             alt="Uploaded"
           />
         </>

@@ -57,7 +57,9 @@ export const FullPost = () => {
         id={postsData._id}
         title={postsData.title}
         imageUrl={
-          postsData.imageUrl ? `${process.env.REACT_APP_API_URL}${postsData.imageUrl}` : ''
+          postsData.imageUrl
+            ? `${process.env.REACT_APP_API_URL}${postsData.imageUrl}`
+            : 'http://localhost:3000/noimage.png'
         }
         user={postsData.user}
         createdAt={formatDate(postsData.createdAt)}

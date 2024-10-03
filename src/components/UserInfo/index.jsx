@@ -1,12 +1,13 @@
 import React from 'react';
 import styles from './UserInfo.module.scss';
+import { Avatar } from '@mui/material';
 
 export const UserInfo = ({ avatarUrl, fullName, additionalText }) => {
   return (
     <div className={styles.root}>
-      <img
+      <Avatar
         className={styles.avatar}
-        src={`${process.env.REACT_APP_API_URL}${avatarUrl}` || '/noavatar.png'}
+        src={`${process.env.REACT_APP_API_URL}${avatarUrl}`}
         alt={fullName}
       />
       <div className={styles.userDetails}>
