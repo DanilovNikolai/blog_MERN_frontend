@@ -2,6 +2,7 @@ import { useRef } from 'react';
 // mui
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
 // router
 import { Link } from 'react-router-dom';
 // scss
@@ -11,7 +12,7 @@ import {
   logout,
   selectIsAuth,
   fetchUserUpdate,
-  fetchAuthMe
+  fetchAuthMe,
 } from '../../redux/slices/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 // axios
@@ -41,7 +42,9 @@ export const Header = () => {
       const imageUrl = data.url;
 
       // Обновляем информацию о пользователе на сервере
-      await dispatch(fetchUserUpdate({ id: userData._id, params: { avatarUrl: imageUrl } }));
+      await dispatch(
+        fetchUserUpdate({ id: userData._id, params: { avatarUrl: imageUrl } })
+      );
       dispatch(fetchAuthMe()); // обновляем данные пользователя после изменения аватара
     } catch (err) {
       console.warn(err);
@@ -65,9 +68,14 @@ export const Header = () => {
                       onClick={() => inputFileRef.current.click()}
                       className={styles.avatar}
                       src={
-                        userData.avatarUrl
-                          ? `${process.env.REACT_APP_API_URL}${userData.avatarUrl}`
-                          : '/noavatar.png'
+                        userData.avatarUrl ? (
+                          `${process.env.REACT_APP_API_URL}${userData.avatarUrl}`
+                        ) : (
+                          <Avatar
+                            alt={userData.fullName}
+                            src={`${process.env.REACT_APP_API_URL}${userData.avatarUrl}`}
+                          />
+                        )
                       }
                       alt={userData.fullName}
                     />

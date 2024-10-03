@@ -69,7 +69,7 @@ export const AddPost = () => {
       return;
     }
     if (errorTitle?.length < 3) {
-      setErrorTitle('Заголовк должен содержать не менее 3 символов!');
+      setErrorTitle('Заголовок должен содержать не менее 3 символов!');
       return;
     }
 
