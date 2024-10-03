@@ -24,7 +24,7 @@ export const AddComment = ({ user }) => {
         userId: user._id,
         postId: params.id,
         text: inputText,
-        avatarUrl: user.avatarUrl,
+        avatarUrl: user.avatarUrl || '/noavatar.png',
       });
 
       // Добавляем комментарий в Redux
@@ -41,7 +41,7 @@ export const AddComment = ({ user }) => {
         <Avatar
           classes={{ root: styles.avatar }}
           src={
-            user.avatarUrl
+            user?.avatarUrl
               ? `${process.env.REACT_APP_API_URL}${user.avatarUrl}`
               : '/noavatar.png'
           }
