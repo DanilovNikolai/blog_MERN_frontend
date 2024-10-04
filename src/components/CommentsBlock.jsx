@@ -36,7 +36,7 @@ export const CommentsBlock = ({
       <>
         Комментарии
         <br />
-        Здесь пока пусто...
+        <span>Здесь пока пусто...</span>
       </>
     );
   } else if (
@@ -51,7 +51,7 @@ export const CommentsBlock = ({
       <>
         Комментарии
         <br />
-        Здесь пока пусто...
+        <span>Здесь пока пусто...</span>
       </>
     );
   }
