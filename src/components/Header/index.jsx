@@ -57,7 +57,7 @@ export const Header = () => {
       <Container maxWidth="lg">
         <div className={styles.inner}>
           <Link to="/" className={styles.logo}>
-            <div># BLOG</div>
+            <div># BLOG FOR FRIENDS</div>
           </Link>
           <div className={styles.buttons}>
             {isAuth ? (
@@ -80,7 +80,7 @@ export const Header = () => {
                       hidden
                     />
                   </div>
-                  <div className={styles.userName}>{userData.fullName}</div>
+                  <div className={styles.userName}>Вы вошли как: {userData.fullName}</div>
                 </div>
                 <Link to="/posts/create">
                   <Button variant="contained">Написать статью</Button>

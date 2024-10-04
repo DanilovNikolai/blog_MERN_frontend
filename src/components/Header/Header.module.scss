@@ -59,7 +59,12 @@
   }
 
   .userName {
-    font-weight: 500;
+    font-weight: 700;
     font-size: 14px;
+    
+    span {
+      font-weight: 400;
+      color: black;
+    }
   }
 }

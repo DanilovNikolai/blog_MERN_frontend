@@ -58,22 +58,8 @@ export const Home = () => {
         <Tab label="Новые" />
         <Tab label="Популярные" />
       </Tabs>
-      
-      <Grid container spacing={4}>
-        {isMobile && (
-          <>
-            <Grid xs={12} item>
-              <TagsBlock tags={tags.items} isLoading={isTagsLoading} />
-            </Grid>
-            <Grid xs={12} item>
-              <CommentsBlock
-                comments={comments.items.slice(0, 5)} 
-                isLoading={false}
-              />
-            </Grid>
-          </>
-        )}
 
+      <Grid container spacing={4}>
         <Grid xs={isMobile ? 12 : 8} item>
           {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) =>
             isPostsLoading ? (
@@ -84,7 +70,9 @@ export const Home = () => {
                 id={obj._id}
                 title={obj.title}
                 imageUrl={
-                  obj.imageUrl ? `${process.env.REACT_APP_API_URL}${obj.imageUrl}` : 'http://localhost:3000/noimage.png'
+                  obj.imageUrl
+                    ? `${process.env.REACT_APP_API_URL}${obj.imageUrl}`
+                    : 'http://localhost:3000/noimage.png'
                 }
                 user={obj.user}
                 createdAt={formatDate(obj.createdAt)}
@@ -110,6 +98,20 @@ export const Home = () => {
               isLoading={false}
             />
           </Grid>
+        )}
+
+        {isMobile && (
+          <>
+            <Grid xs={12} item>
+              <TagsBlock tags={tags.items} isLoading={isTagsLoading} />
+            </Grid>
+            <Grid xs={12} item>
+              <CommentsBlock
+                comments={comments.items.slice(0, 5)}
+                isLoading={false}
+              />
+            </Grid>
+          </>
         )}
       </Grid>
     </>
