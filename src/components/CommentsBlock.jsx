@@ -26,19 +26,38 @@ export const CommentsBlock = ({
 
   if (
     location.pathname === '/' ||
-    (location.pathname.startsWith('/tags') && comments)
+    (location.pathname.startsWith('/tags') && comments.length)
   ) {
     // На главной странице показываем последние 5 комментариев
     resultComments = comments.slice(0, 5);
-    title = 'Последние комментарии';
-  } else if (location.pathname.startsWith(`/posts/${postId}`) && comments) {
+    title = resultComments.length ? (
+      'Последние комментарии'
+    ) : (
+      <>
+        Комментарии
+        <br />
+        Здесь пока пусто...
+      </>
+    );
+  } else if (
+    location.pathname.startsWith(`/posts/${postId}`) &&
+    comments.length
+  ) {
     // На странице поста фильтруем комментарии по postId
     resultComments = comments;
-    title = 'Комментарии';
+    title = resultComments.length ? (
+      'Комментарии'
+    ) : (
+      <>
+        Комментарии
+        <br />
+        Здесь пока пусто...
+      </>
+    );
   }
 
   return (
-    <SideBlock title={title ? title : 'Комментариев пока никто не оставлял :('}>
+    <SideBlock title={title}>
       <List>
         {(isLoading ? [...Array(5)] : resultComments)?.map((comment, index) => (
           <React.Fragment key={index}>
