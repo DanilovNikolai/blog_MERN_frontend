@@ -11,7 +11,7 @@ import Skeleton from '@mui/material/Skeleton';
 // components
 import { SideBlock } from './SideBlock';
 // redux
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchPostsByTags } from '../redux/slices/postsSlice';
 
 export const TagsBlock = ({ tags, isLoading = true }) => {
@@ -20,7 +20,7 @@ export const TagsBlock = ({ tags, isLoading = true }) => {
 
   useEffect(() => {
     dispatch(fetchPostsByTags());
-  }, [tag]);
+  }, [dispatch, tag]);
 
   return (
     <SideBlock title="Популярные тэги">

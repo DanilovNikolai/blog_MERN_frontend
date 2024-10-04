@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Grid from '@mui/material/Grid';
+import { useMediaQuery } from '@mui/material';
 // components
 import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
@@ -43,6 +44,9 @@ export const Home = () => {
     }
   };
 
+  // Определяем, является ли устройство мобильным
+  const isMobile = useMediaQuery('(max-width:600px)');
+
   return (
     <>
       <Tabs
@@ -54,14 +58,29 @@ export const Home = () => {
         <Tab label="Новые" />
         <Tab label="Популярные" />
       </Tabs>
+      
       <Grid container spacing={4}>
-        <Grid xs={8} item>
+        {isMobile && (
+          <>
+            <Grid xs={12} item>
+              <TagsBlock tags={tags.items} isLoading={isTagsLoading} />
+            </Grid>
+            <Grid xs={12} item>
+              <CommentsBlock
+                comments={comments.items.slice(0, 5)} 
+                isLoading={false}
+              />
+            </Grid>
+          </>
+        )}
+
+        <Grid xs={isMobile ? 12 : 8} item>
           {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) =>
             isPostsLoading ? (
               <Post key={index} isLoading={true} />
             ) : (
               <Post
-                key={index}
+                key={obj._id}
                 id={obj._id}
                 title={obj.title}
                 imageUrl={
@@ -82,13 +101,16 @@ export const Home = () => {
             )
           )}
         </Grid>
-        <Grid xs={4} item>
-          <TagsBlock tags={tags.items} isLoading={isTagsLoading} />
-          <CommentsBlock
-            comments={comments.items.slice(0, 5)} // Показываем последние 5 комментариев
-            isLoading={false}
-          />
-        </Grid>
+
+        {!isMobile && (
+          <Grid xs={4} item>
+            <TagsBlock tags={tags.items} isLoading={isTagsLoading} />
+            <CommentsBlock
+              comments={comments.items.slice(0, 5)}
+              isLoading={false}
+            />
+          </Grid>
+        )}
       </Grid>
     </>
   );
