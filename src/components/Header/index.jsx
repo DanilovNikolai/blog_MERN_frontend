@@ -59,7 +59,7 @@ export const Header = () => {
           <Link to="/" className={styles.logo}>
             <div># BLOG FOR FRIENDS</div>
           </Link>
-          <div className={styles.userButtons}>
+          <div className={styles.buttons}>
             {isAuth ? (
               <>
                 <div className={styles.userContainer}>
@@ -80,33 +80,28 @@ export const Header = () => {
                       hidden
                     />
                   </div>
-                  <div className={styles.userName}>
-                    <span>Вы вошли как: </span>
-                    {userData.fullName}
-                  </div>
+                  <div className={styles.userName}>{userData.fullName}</div>
                 </div>
-                <div className={styles.actionButtons}>
-                  <Link to="/posts/create">
-                    <Button variant="contained">Написать статью</Button>
-                  </Link>
-                  <Button
-                    onClick={onClickLogout}
-                    variant="contained"
-                    color="error"
-                  >
-                    Выйти
-                  </Button>
-                </div>
+                <Link to="/posts/create">
+                  <Button variant="contained">Написать статью</Button>
+                </Link>
+                <Button
+                  onClick={onClickLogout}
+                  variant="contained"
+                  color="error"
+                >
+                  Выйти
+                </Button>
               </>
             ) : (
-              <div className={styles.authButtons}>
+              <>
                 <Link to="/auth/login">
                   <Button variant="outlined">Войти</Button>
                 </Link>
                 <Link to="/auth/register">
                   <Button variant="contained">Создать аккаунт</Button>
                 </Link>
-              </div>
+              </>
             )}
           </div>
         </div>

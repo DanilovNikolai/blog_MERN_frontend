@@ -8,40 +8,42 @@
 .inner {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
 }
 
 .logo {
   background-color: black;
   color: #fff;
   font-weight: 700;
+  line-height: 35px;
   text-transform: uppercase;
   letter-spacing: 0.15px;
   border-radius: 5px;
   padding: 0 10px;
   text-decoration: none;
-  width: 100%; /* Логотип на всю ширину экрана */
-  text-align: center;
-  line-height: 35px;
-  min-height: 56px; /* Делаем высоту логотипа такой же, как у кнопок */
 
   &:hover {
     background-color: #4361ee;
   }
 }
 
-.userButtons {
+.buttons {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 100%;
+  button {
+    margin-left: 10px;
+  }
+
+  a {
+    text-decoration: none;
+  }
 }
 
 .userContainer {
+  color: #4361ee;
   display: flex;
   align-items: center;
-  width: calc(50% - 10px);
+  justify-content: center;
+  padding: 0px 10px;
+  border-radius: 5px;
 
   .avatarContainer {
     display: flex;
@@ -57,51 +59,7 @@
   }
 
   .userName {
-    font-weight: 700;
+    font-weight: 500;
     font-size: 14px;
-
-    span {
-      font-weight: 400;
-      color: black;
-    }
-  }
-}
-
-.actionButtons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  width: calc(50% - 10px);
-
-  button {
-    min-height: 56px; /* Одинаковая высота для кнопок */
-  }
-}
-
-.authButtons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-
-  button {
-    min-height: 56px; /* Одинаковая высота для кнопок */
-  }
-}
-
-@media (max-width: 600px) {
-  .inner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .logo {
-    text-align: center;
-    width: 100%;
-  }
-
-  .userContainer,
-  .actionButtons {
-    width: 100%;
-    justify-content: space-between;
   }
 }
