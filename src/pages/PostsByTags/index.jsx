@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 // mui
 import Grid from '@mui/material/Grid';
@@ -11,25 +11,32 @@ import { TagsBlock } from '../../components/TagsBlock';
 import { CommentsBlock } from '../../components/CommentsBlock';
 // styles
 import styles from './PostsByTags.module.scss';
+// utils
+import { formatDate } from '../../utils/formatDate';
 
 export const PostsByTags = () => {
   const { tag } = useParams();
+  const dispatch = useDispatch();
   const userData = useSelector((state) => state.auth.userData);
   const { posts, tags } = useSelector((state) => state.posts);
   const { comments } = useSelector((state) => state.comments);
-  const dispatch = useDispatch();
-
-  // const filteredComments = comments.items?.filter(
-  //   (comment) => comment.postId === params.id
-  // );
+  const [filteredComments, setFilteredComments] = useState([]);
 
   const isPostsLoading = posts.status === 'loading';
   const isTagsLoading = tags.status === 'loading';
 
+  // Загружаем посты по тэгу
   useEffect(() => {
     dispatch(fetchPostsByTags(tag));
-    console.log(tags);
-  }, [dispatch, tag, tags]);
+  }, [dispatch, tag]);
+
+  // Фильтрация комментариев по постам с нужным тэгом
+  useEffect(() => {
+    const commentsForPostsByTag = comments.items?.filter(comment => 
+      posts.items?.some(post => post._id === comment.postId)
+    );
+    setFilteredComments(commentsForPostsByTag);
+  }, [posts, comments]);
 
   return (
     <>
@@ -56,9 +63,12 @@ export const PostsByTags = () => {
                     : '/noimage.png'
                 }
                 user={obj.user}
-                createdAt={obj.createdAt}
+                createdAt={formatDate(obj.createdAt)}
                 viewsCount={obj.viewsCount}
-                commentsCount={3}
+                commentsCount={
+                  comments.items.filter((comment) => comment.postId === obj._id)
+                    .length
+                }
                 tags={obj.tags}
                 isLoading={isPostsLoading}
                 isEditable={userData?._id === obj.user._id}
@@ -68,7 +78,7 @@ export const PostsByTags = () => {
         </Grid>
         <Grid xs={4} item>
           <TagsBlock tags={tags.items} isLoading={isTagsLoading} />
-          <CommentsBlock comments={comments} isLoading={false} />
+          <CommentsBlock comments={filteredComments} isLoading={false} />
         </Grid>
       </Grid>
     </>

@@ -24,7 +24,7 @@ export const CommentsBlock = ({
   let resultComments = [];
   let title;
 
-  if (location.pathname === '/') {
+  if (location.pathname === '/' || location.pathname.startsWith('/tags')) {
     // На главной странице показываем последние 5 комментариев
     resultComments = comments.slice(0, 5);
     title = 'Последние комментарии';
@@ -62,10 +62,18 @@ export const CommentsBlock = ({
                 />
               )}
             </ListItem>
-            <div style={{ textAlign: 'right', marginRight: '15px', marginBottom: '5px' }}>
+            <div
+              style={{
+                textAlign: 'right',
+                marginRight: '15px',
+                marginBottom: '5px',
+              }}
+            >
               <ListItemText secondary={formatDate(comment.createdAt)} />
             </div>
-            <Divider variant="inset" component="li" />
+            {index < resultComments.length - 1 && (
+              <Divider variant="inset" component="li" />
+            )}
           </React.Fragment>
         ))}
       </List>
