@@ -8,6 +8,8 @@
 .inner {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Для корректного отображения на мобильных */
 }
 
 .logo {
@@ -20,30 +22,27 @@
   border-radius: 5px;
   padding: 0 10px;
   text-decoration: none;
+  width: 100%; /* Логотип на всю ширину экрана */
+  text-align: center;
+  margin-bottom: 10px; /* Отступ для мобильной версии */
 
   &:hover {
     background-color: #4361ee;
   }
 }
 
-.buttons {
+.userButtons {
   display: flex;
-  button {
-    margin-left: 10px;
-  }
-
-  a {
-    text-decoration: none;
-  }
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .userContainer {
-  color: #4361ee;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0px 10px;
-  border-radius: 5px;
+  margin-bottom: 10px; /* Отступ на мобильной версии */
+  width: calc(50% - 10px);
 
   .avatarContainer {
     display: flex;
@@ -61,10 +60,41 @@
   .userName {
     font-weight: 700;
     font-size: 14px;
-    
+
     span {
       font-weight: 400;
       color: black;
     }
+  }
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  width: calc(50% - 10px); /* Кнопки на всю ширину на мобильных устройствах */
+}
+
+.authButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+@media (max-width: 600px) {
+  .inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .logo {
+    text-align: center;
+    width: 100%;
+  }
+
+  .userContainer,
+  .actionButtons {
+    width: 100%;
+    justify-content: space-between;
   }
 }
