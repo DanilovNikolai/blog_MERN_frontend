@@ -75,7 +75,7 @@ export const FullPost = () => {
         postId={params.id}
         isLoading={isLoading}
       >
-        <AddComment user={userData} />
+        {userData && <AddComment user={userData} />}
       </CommentsBlock>
     </>
   );
