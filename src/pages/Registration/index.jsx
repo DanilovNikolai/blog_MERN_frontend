@@ -92,10 +92,10 @@ export const Registration = () => {
           onClick={() => inputFileRef.current.click()}
           className={styles.avatar}
           src={
-            userData.avatarUrl &&
+            userData?.avatarUrl &&
             `${process.env.REACT_APP_API_URL}${userData.avatarUrl}`
           }
-          alt={userData.fullName}
+          alt={userData?.fullName}
         />
         <input
           ref={inputFileRef}
