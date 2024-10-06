@@ -101,7 +101,7 @@ export const Registration = () => {
         <TextField
           error={!!errors.fullName?.message}
           helperText={errors.fullName?.message}
-          {...register('fullName', { required: 'Укажите полное имя' })}
+          {...register('fullName', { required: 'Укажите имя' })}
           className={styles.field}
           label="Полное имя"
           fullWidth
