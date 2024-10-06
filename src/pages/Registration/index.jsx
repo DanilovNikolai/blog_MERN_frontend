@@ -8,7 +8,7 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 // scss
-import styles from './Login.module.scss';
+import styles from './Registration.module.scss';
 // react-hook-form
 import { useForm } from 'react-hook-form';
 // redux-toolkit
@@ -90,7 +90,6 @@ export const Registration = () => {
         <Avatar
           sx={{ width: 100, height: 100 }}
           onClick={() => inputFileRef.current.click()}
-          className={styles.avatar}
           src={
             userData?.avatarUrl &&
             `${process.env.REACT_APP_API_URL}${userData.avatarUrl}`
