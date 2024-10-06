@@ -94,6 +94,7 @@ export const Registration = () => {
             userData?.avatarUrl &&
             `${process.env.REACT_APP_API_URL}${userData.avatarUrl}`
           }
+          className={styles.avatar}
           alt={userData?.fullName}
         />
         <input
