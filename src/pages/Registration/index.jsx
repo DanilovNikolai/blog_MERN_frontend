@@ -13,7 +13,14 @@ import styles from './Login.module.scss';
 import { useForm } from 'react-hook-form';
 // redux-toolkit
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchRegister, selectIsAuth } from '../../redux/slices/authSlice';
+import {
+  fetchRegister,
+  selectIsAuth,
+  fetchUserUpdate,
+  fetchAuthMe,
+} from '../../redux/slices/authSlice';
+// axios
+import axios from '../../axios';
 
 export const Registration = () => {
   const dispatch = useDispatch();
