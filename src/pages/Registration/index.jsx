@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRef } from 'react';
 // router
 import { Navigate } from 'react-router-dom';
 // mui
@@ -18,6 +18,8 @@ import { fetchRegister, selectIsAuth } from '../../redux/slices/authSlice';
 export const Registration = () => {
   const dispatch = useDispatch();
   const isAuth = useSelector(selectIsAuth);
+  const { userData } = useSelector((state) => state.auth);
+  const inputFileRef = useRef(null);
 
   // hook useForm
   const {
@@ -32,6 +34,27 @@ export const Registration = () => {
     },
     mode: 'onChange',
   });
+
+  const handleChangeFile = async (event) => {
+    try {
+      const formData = new FormData(); // для загрузки изображений на бэк-енд
+      const file = event.target.files[0];
+      formData.append('image', file);
+
+      // Отправляем изображение на сервер
+      const { data } = await axios.post('/upload', formData);
+      const imageUrl = data.url;
+
+      // Обновляем информацию о пользователе на сервере
+      await dispatch(
+        fetchUserUpdate({ id: userData._id, params: { avatarUrl: imageUrl } })
+      );
+      dispatch(fetchAuthMe()); // обновляем данные пользователя после изменения аватара
+    } catch (err) {
+      console.warn(err);
+      alert('Ошибка при загрузке файла');
+    }
+  };
 
   // выполняется только тогда, когда валидация прошла успешно
   // передаем данные пользователя на бэкенд
@@ -56,8 +79,23 @@ export const Registration = () => {
       <Typography classes={{ root: styles.title }} variant="h5">
         Создание аккаунта
       </Typography>
-      <div className={styles.avatar}>
-        <Avatar sx={{ width: 100, height: 100 }} />
+      <div className={styles.avatarContainer}>
+        <Avatar
+          sx={{ width: 100, height: 100 }}
+          onClick={() => inputFileRef.current.click()}
+          className={styles.avatar}
+          src={
+            userData.avatarUrl &&
+            `${process.env.REACT_APP_API_URL}${userData.avatarUrl}`
+          }
+          alt={userData.fullName}
+        />
+        <input
+          ref={inputFileRef}
+          type="file"
+          onChange={handleChangeFile}
+          hidden
+        />
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
