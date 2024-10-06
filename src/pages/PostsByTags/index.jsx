@@ -78,7 +78,7 @@ export const PostsByTags = () => {
         </Grid>
         <Grid xs={4} item>
           <TagsBlock tags={tags.items} isLoading={isTagsLoading} />
-          <CommentsBlock comments={filteredComments} isLoading={false} />
+          {comments && <CommentsBlock comments={filteredComments} isLoading={false} />}
         </Grid>
       </Grid>
     </>

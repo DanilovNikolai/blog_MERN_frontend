@@ -70,13 +70,15 @@ export const FullPost = () => {
       >
         <ReactMarkdown children={postsData.text} />
       </Post>
-      <CommentsBlock
-        comments={filteredComments} // Фильтруем комментарии по postId
-        postId={params.id}
-        isLoading={isLoading}
-      >
-        {userData && <AddComment user={userData} />}
-      </CommentsBlock>
+      {comments && (
+        <CommentsBlock
+          comments={filteredComments} // Фильтруем комментарии по postId
+          postId={params.id}
+          isLoading={isLoading}
+        >
+          {userData && <AddComment user={userData} />}
+        </CommentsBlock>
+      )}
     </>
   );
 };
