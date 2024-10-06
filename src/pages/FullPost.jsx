@@ -70,7 +70,7 @@ export const FullPost = () => {
       >
         <ReactMarkdown children={postsData.text} />
       </Post>
-      {comments.length && (
+      {filteredComments.length && (
         <CommentsBlock
           comments={filteredComments} // Фильтруем комментарии по postId
           postId={params.id}
