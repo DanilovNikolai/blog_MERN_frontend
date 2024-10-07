@@ -4,7 +4,8 @@ import { useParams } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchPostsByTags } from '../../redux/slices/postsSlice';
+import { fetchPostsByTags, fetchTags } from '../../redux/slices/postsSlice';
+import { fetchComments } from '../../redux/slices/commentsSlice';
 // components
 import { Post } from '../../components/Post';
 import { TagsBlock } from '../../components/TagsBlock';
@@ -28,12 +29,14 @@ export const PostsByTags = () => {
   // Загружаем посты по тэгу
   useEffect(() => {
     dispatch(fetchPostsByTags(tag));
+    dispatch(fetchTags());
+    dispatch(fetchComments());
   }, [dispatch, tag]);
 
   // Фильтрация комментариев по постам с нужным тэгом
   useEffect(() => {
-    const commentsForPostsByTag = comments.items?.filter(comment => 
-      posts.items?.some(post => post._id === comment.postId)
+    const commentsForPostsByTag = comments.items?.filter((comment) =>
+      posts.items?.some((post) => post._id === comment.postId)
     );
     setFilteredComments(commentsForPostsByTag);
   }, [posts, comments]);
@@ -78,7 +81,9 @@ export const PostsByTags = () => {
         </Grid>
         <Grid xs={4} item>
           <TagsBlock tags={tags.items} isLoading={isTagsLoading} />
-          {comments && <CommentsBlock comments={filteredComments} isLoading={false} />}
+          {comments && (
+            <CommentsBlock comments={filteredComments} isLoading={false} />
+          )}
         </Grid>
       </Grid>
     </>
