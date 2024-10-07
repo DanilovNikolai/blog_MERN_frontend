@@ -1,0 +1,18 @@
+.container {
+  cursor: pointer;
+  position: relative;
+}
+
+.list {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, display 0.5s ease;
+}
+
+.show {
+  max-height: 1000px;
+}
+
+.hide {
+  max-height: 0;
+}

@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 // components
-import { Post } from '../components/Post';
-import { AddComment } from '../components/AddComment';
-import { CommentsBlock } from '../components/CommentsBlock';
+import { Post } from '../../components/Post';
+import { AddComment } from '../../components/AddComment';
+import { CommentsBlock } from '../../components/CommentsBlock';
 // axios
-import axios from '../axios';
+import axios from '../../axios';
 // redux
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchComments } from '../redux/slices/commentsSlice';
+import { fetchComments } from '../../redux/slices/commentsSlice';
 // ReactMarkdown
 import ReactMarkdown from 'react-markdown';
 // utils
-import { formatDate } from '../utils/formatDate';
+import { formatDate } from '../../utils/formatDate';
 
 export const FullPost = () => {
   const dispatch = useDispatch();

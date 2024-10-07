@@ -5,19 +5,21 @@ import Tab from '@mui/material/Tab';
 import Grid from '@mui/material/Grid';
 import { useMediaQuery } from '@mui/material';
 // components
-import { Post } from '../components/Post';
-import { TagsBlock } from '../components/TagsBlock';
-import { CommentsBlock } from '../components/CommentsBlock';
+import { Post } from '../../components/Post';
+import { TagsBlock } from '../../components/TagsBlock';
+import { CommentsBlock } from '../../components/CommentsBlock';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchPosts,
   fetchTags,
   fetchPostsByViews,
-} from '../redux/slices/postsSlice';
-import { fetchComments } from '../redux/slices/commentsSlice';
+} from '../../redux/slices/postsSlice';
+import { fetchComments } from '../../redux/slices/commentsSlice';
 // utils
-import { formatDate } from '../utils/formatDate';
+import { formatDate } from '../../utils/formatDate';
+// styles
+import styles from './Home.module.scss';
 
 export const Home = () => {
   const [tabValue, setTabValue] = useState(0);
@@ -45,7 +47,7 @@ export const Home = () => {
   };
 
   // Определяем, является ли устройство мобильным
-  const isMobile = useMediaQuery('(max-width:600px)');
+  const isMobile = useMediaQuery('(max-width:900px)');
 
   return (
     <>
@@ -103,12 +105,17 @@ export const Home = () => {
         {isMobile && (
           <>
             <Grid xs={12} item>
-              <TagsBlock tags={tags.items} isLoading={isTagsLoading} />
+              <TagsBlock
+                tags={tags.items}
+                isLoading={isTagsLoading}
+                isMobile={isMobile}
+              />
             </Grid>
             <Grid xs={12} item>
               <CommentsBlock
                 comments={comments.items.slice(0, 5)}
                 isLoading={false}
+                isMobile={isMobile}
               />
             </Grid>
           </>

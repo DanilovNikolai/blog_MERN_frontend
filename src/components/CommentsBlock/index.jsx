@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 // mui
-import { SideBlock } from './SideBlock';
+import { SideBlock } from '../SideBlock';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
@@ -11,16 +11,25 @@ import Skeleton from '@mui/material/Skeleton';
 // router
 import { useLocation } from 'react-router-dom';
 // utils
-import { formatDate } from '../utils/formatDate';
+import { formatDate } from '../../utils/formatDate';
+// styles
+import styles from './CommentsBlock.module.scss';
 
 export const CommentsBlock = ({
   comments = [],
   postId,
   children,
   isLoading = true,
+  isMobile,
 }) => {
-  // Получаем текущий URL
   const location = useLocation();
+  const [commentsVisible, setCommentsVisible] = useState(!isMobile);
+
+  // Сбрасываем видимость комментариев при смене режима (mobile/desktop)
+  useEffect(() => {
+    setCommentsVisible(!isMobile);
+  }, [isMobile]);
+
   let resultComments = [];
   let title;
 
@@ -28,37 +37,36 @@ export const CommentsBlock = ({
     location.pathname === '/' ||
     (location.pathname.startsWith('/tags') && comments.length)
   ) {
-    // На главной странице показываем последние 5 комментариев
     resultComments = comments.slice(0, 5);
-    title = resultComments.length ? (
-      'Последние комментарии'
-    ) : (
-      <>
-        Комментарии
-        <br />
-        <span>Здесь пока пусто...</span>
-      </>
-    );
-    // На странице поста фильтруем комментарии по postId
+    title = resultComments.length
+      ? 'Последние комментарии'
+      : 'Здесь пока пусто...';
   } else if (
     location.pathname.startsWith(`/posts/${postId}`) &&
     comments.length
   ) {
     resultComments = comments;
-    title = resultComments.length ? (
-      'Комментарии'
-    ) : (
-      <>
-        Комментарии
-        <br />
-        <span>Здесь пока пусто...</span>
-      </>
-    );
+    title = resultComments.length ? 'Комментарии' : 'Здесь пока пусто...';
   }
 
+  const handleShowComments = () => {
+    console.log(commentsVisible);
+    if (isMobile) {
+      setCommentsVisible(!commentsVisible);
+    }
+  };
+
   return (
-    <SideBlock title={title}>
-      <List>
+    <SideBlock
+      title={title}
+      className={styles.container}
+      onShowComments={handleShowComments}
+    >
+      <List
+        className={`${styles.list} ${
+          commentsVisible ? styles.show : styles.hide
+        }`}
+      >
         {(isLoading ? [...Array(5)] : resultComments)?.map((comment, index) => (
           <React.Fragment key={comment._id}>
             <ListItem alignItems="flex-start">
@@ -103,6 +111,7 @@ export const CommentsBlock = ({
           </React.Fragment>
         ))}
       </List>
+
       {children}
     </SideBlock>
   );

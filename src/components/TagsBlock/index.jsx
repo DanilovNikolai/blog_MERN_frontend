@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 // mui
 import List from '@mui/material/List';
@@ -9,22 +9,45 @@ import TagIcon from '@mui/icons-material/Tag';
 import ListItemText from '@mui/material/ListItemText';
 import Skeleton from '@mui/material/Skeleton';
 // components
-import { SideBlock } from './SideBlock';
+import { SideBlock } from '../SideBlock';
 // redux
 import { useDispatch } from 'react-redux';
-import { fetchPostsByTags } from '../redux/slices/postsSlice';
+import { fetchPostsByTags } from '../../redux/slices/postsSlice';
+// styles
+import styles from './TagsBlock.module.scss';
 
-export const TagsBlock = ({ tags, isLoading = true }) => {
+export const TagsBlock = ({ tags, isLoading = true, isMobile }) => {
   const { tag } = useParams(); // Получаем параметр "tag" из URL
+  const [tagsVisible, setTagsVisible] = useState(!isMobile);
   const dispatch = useDispatch();
+
+  // Сбрасываем видимость тэгов при смене режима (mobile/desktop)
+  useEffect(() => {
+    setTagsVisible(!isMobile);
+  }, [isMobile]);
 
   useEffect(() => {
     dispatch(fetchPostsByTags());
   }, [dispatch, tag]);
 
+  const handleShowTags = () => {
+    console.log(tagsVisible);
+    if (isMobile) {
+      setTagsVisible(!tagsVisible);
+    }
+  };
+
   return (
-    <SideBlock title="Популярные тэги">
-      <List>
+    <SideBlock
+      title="Популярные тэги"
+      className={styles.container}
+      onShowTags={handleShowTags}
+    >
+      <List
+        className={`${styles.list} ${
+          tagsVisible ? styles.show : styles.hide
+        }`}
+      >
         {(isLoading ? [...Array(5)] : tags).map((tag, index) => (
           <Link
             style={{ textDecoration: 'none', color: 'black' }}
