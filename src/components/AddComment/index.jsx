@@ -21,7 +21,7 @@ export const AddComment = ({ user }) => {
       userId: user._id,
       postId: params.id,
       text: inputText,
-      avatarUrl: user.avatarUrl || '/noavatar.png',
+      avatarUrl: user.avatarUrl ? user.avatarUrl : '/noavatar.png',
     };
 
     try {

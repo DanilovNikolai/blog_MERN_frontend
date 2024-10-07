@@ -39,11 +39,11 @@ export const CommentsBlock = ({
         <span>Здесь пока пусто...</span>
       </>
     );
+    // На странице поста фильтруем комментарии по postId
   } else if (
     location.pathname.startsWith(`/posts/${postId}`) &&
     comments.length
   ) {
-    // На странице поста фильтруем комментарии по postId
     resultComments = comments;
     title = resultComments.length ? (
       'Комментарии'
@@ -60,7 +60,7 @@ export const CommentsBlock = ({
     <SideBlock title={title}>
       <List>
         {(isLoading ? [...Array(5)] : resultComments)?.map((comment, index) => (
-          <React.Fragment key={index}>
+          <React.Fragment key={comment._id}>
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
                 {isLoading ? (
@@ -68,7 +68,11 @@ export const CommentsBlock = ({
                 ) : (
                   <Avatar
                     alt={comment.userId?.fullName}
-                    src={`${process.env.REACT_APP_API_URL}${comment.userId?.avatarUrl}`}
+                    src={
+                      comment.userId?.avatarUrl
+                        ? `${process.env.REACT_APP_API_URL}${comment.userId.avatarUrl}`
+                        : '/noavatar.png'
+                    }
                   />
                 )}
               </ListItemAvatar>
