@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 // mui
 import { SideBlock } from './SideBlock';
 import ListItem from '@mui/material/ListItem';
@@ -21,7 +21,7 @@ export const CommentsBlock = ({
 }) => {
   // Получаем текущий URL
   const location = useLocation();
-  const [resultComments, setResultComments] = useState([]);
+  let resultComments = [];
   let title;
 
   if (
@@ -29,7 +29,7 @@ export const CommentsBlock = ({
     (location.pathname.startsWith('/tags') && comments.length)
   ) {
     // На главной странице показываем последние 5 комментариев
-    setResultComments(comments.slice(0, 5));
+    resultComments = comments.slice(0, 5);
     title = resultComments.length ? (
       'Последние комментарии'
     ) : (
@@ -44,7 +44,7 @@ export const CommentsBlock = ({
     location.pathname.startsWith(`/posts/${postId}`) &&
     comments.length
   ) {
-    setResultComments(comments);
+    resultComments = comments;
     title = resultComments.length ? (
       'Комментарии'
     ) : (

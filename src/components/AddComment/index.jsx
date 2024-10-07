@@ -8,7 +8,10 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 // redux
 import { useDispatch } from 'react-redux';
-import { fetchAddComment } from '../../redux/slices/commentsSlice';
+import {
+  fetchAddComment,
+  fetchComments,
+} from '../../redux/slices/commentsSlice';
 
 export const AddComment = ({ user }) => {
   const [inputText, setInputText] = useState('');
@@ -27,6 +30,7 @@ export const AddComment = ({ user }) => {
     try {
       // Добавляем комментарий в Redux
       await dispatch(fetchAddComment(newComment));
+      dispatch(fetchComments());
       setInputText('');
     } catch (err) {
       console.error('Ошибка при добавлении комментария:', err);
