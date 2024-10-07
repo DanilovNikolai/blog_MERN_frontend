@@ -6,32 +6,30 @@ import styles from './AddComment.module.scss';
 import TextField from '@mui/material/TextField';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-// axios
-import axios from '../../axios';
 // redux
 import { useDispatch } from 'react-redux';
-import { addComment } from '../../redux/slices/commentsSlice.js';
+import { fetchAddComment } from '../../redux/slices/commentsSlice';
 
 export const AddComment = ({ user }) => {
   const [inputText, setInputText] = useState('');
   const params = useParams();
   const dispatch = useDispatch();
 
-  const handleButtonPost = async () => {
-    try {
-      const response = await axios.post('/comments', {
-        fullName: user.fullName,
-        userId: user._id,
-        postId: params.id,
-        text: inputText,
-        avatarUrl: user.avatarUrl || '/noavatar.png',
-      });
+  const handleAddComment = async () => {
+    const newComment = {
+      fullName: user.fullName,
+      userId: user._id,
+      postId: params.id,
+      text: inputText,
+      avatarUrl: user.avatarUrl || '/noavatar.png',
+    };
 
+    try {
       // Добавляем комментарий в Redux
-      dispatch(addComment(response.data));
+      await dispatch(fetchAddComment(newComment));
       setInputText('');
     } catch (err) {
-      console.log(err);
+      console.error('Ошибка при добавлении комментария:', err);
     }
   };
 
@@ -55,7 +53,7 @@ export const AddComment = ({ user }) => {
             multiline
             fullWidth
           />
-          <Button onClick={handleButtonPost} variant="contained">
+          <Button onClick={handleAddComment} variant="contained">
             Отправить
           </Button>
         </div>
