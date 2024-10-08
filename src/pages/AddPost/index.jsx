@@ -5,6 +5,7 @@ import { useNavigate, Navigate, useParams } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
+import { useMediaQuery } from '@mui/material';
 // mde
 import SimpleMDE from 'react-simplemde-editor';
 // styles
@@ -30,6 +31,9 @@ export const AddPost = () => {
   const inputFileRef = useRef(null);
 
   const isEditing = !!id;
+
+    // Определяем, является ли устройство мобильным
+    const isMobile = useMediaQuery('(max-width:900px)');
 
   const handleChangeFile = async (event) => {
     try {
@@ -104,7 +108,7 @@ export const AddPost = () => {
   const options = useMemo(
     () => ({
       spellChecker: false,
-      maxHeight: '400px',
+      maxHeight: isMobile ? '200px' : '400px',
       autofocus: true,
       placeholder: 'Введите текст...',
       status: false,
@@ -159,6 +163,7 @@ export const AddPost = () => {
             variant="contained"
             color="error"
             onClick={onClickRemoveImage}
+            className={styles.deleteButton}
           >
             Удалить
           </Button>

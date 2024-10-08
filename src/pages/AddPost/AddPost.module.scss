@@ -2,6 +2,9 @@
   input {
     font-size: 42px;
     font-weight: 900;
+    @media (max-width: 900px){
+        font-size: 30px;
+    }
   }
 
   div {
@@ -14,6 +17,9 @@
 
 .image {
   width: 100%;
+  @media (max-width: 900px){
+      scale: 0.5;
+  }
 }
 
 .tags {
@@ -37,8 +43,13 @@
 
 .buttons {
   display: flex;
+  margin-bottom: 10px;
 
   button {
     margin-right: 15px;
   }
+}
+
+.deleteButton {
+  margin-left: 10px;
 }
