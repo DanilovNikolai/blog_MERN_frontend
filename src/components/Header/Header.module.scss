@@ -101,6 +101,8 @@
 
   @media (max-width: 900px) {
     flex-grow: 1;
+    justify-content: flex-start;
+    margin-left: 5px;
   }
 }
 
