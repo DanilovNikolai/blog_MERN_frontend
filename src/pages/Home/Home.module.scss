@@ -1,0 +1,11 @@
+@media (max-width: 900px) {
+  .tabs {
+    align-items: center;
+
+    .tab {
+      min-height: 0px;
+      padding-bottom: 10px;
+      font-size: 14px;
+    }
+  }
+}

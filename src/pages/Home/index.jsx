@@ -52,16 +52,17 @@ export const Home = () => {
   return (
     <>
       <Tabs
-        style={{ marginBottom: 15 }}
+        style={isMobile ? { marginBottom: 8 } : { marginBottom: 15 }}
         value={tabValue}
         aria-label="basic tabs example"
         onChange={handleTabChange}
+        className={styles.tabs}
       >
-        <Tab label="Новые" />
-        <Tab label="Популярные" />
+        <Tab className={styles.tab} label="Новые" />
+        <Tab className={styles.tab} label="Популярные" />
       </Tabs>
 
-      <Grid container spacing={4}>
+      <Grid container spacing={isMobile ? 0 : 4}>
         <Grid xs={isMobile ? 12 : 8} item>
           {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) =>
             isPostsLoading ? (
