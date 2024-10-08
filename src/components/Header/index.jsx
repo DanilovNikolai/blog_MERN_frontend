@@ -1,8 +1,4 @@
 import { useRef } from 'react';
-// mui
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 // router
 import { Link } from 'react-router-dom';
 // scss
@@ -54,7 +50,7 @@ export const Header = () => {
 
   return (
     <div className={styles.root}>
-      <Container maxWidth="lg">
+      <div className={styles.container}>
         <div className={styles.inner}>
           <Link to="/" className={styles.logo}>
             <div># BLOG FOR FRIENDS</div>
@@ -64,12 +60,13 @@ export const Header = () => {
               <>
                 <div className={styles.userContainer}>
                   <div className={styles.avatarContainer}>
-                    <Avatar
+                    <img
                       onClick={() => inputFileRef.current.click()}
                       className={styles.avatar}
                       src={
-                        userData.avatarUrl &&
-                        `${process.env.REACT_APP_API_URL}${userData.avatarUrl}`
+                        userData.avatarUrl
+                          ? `${process.env.REACT_APP_API_URL}${userData.avatarUrl}`
+                          : '/noavatar.png'
                       }
                       alt={userData.fullName}
                     />
@@ -82,30 +79,35 @@ export const Header = () => {
                   </div>
                   <div className={styles.userName}>{userData.fullName}</div>
                 </div>
-                <Link to="/posts/create">
-                  <Button variant="contained">Написать статью</Button>
+                <Link to="/posts/create" className={styles.link}>
+                  <button className={`${styles.button} ${styles.writeButton}`}>
+                    Написать статью
+                  </button>
                 </Link>
-                <Button
+                <button
                   onClick={onClickLogout}
-                  variant="contained"
-                  color="error"
+                  className={`${styles.button} ${styles.logoutButton}`}
                 >
                   Выйти
-                </Button>
+                </button>
               </>
             ) : (
               <>
-                <Link to="/auth/login">
-                  <Button variant="outlined">Войти</Button>
+                <Link to="/auth/login" className={styles.link}>
+                  <button className={styles.button}>Войти</button>
                 </Link>
-                <Link to="/auth/register">
-                  <Button variant="contained">Создать аккаунт</Button>
+                <Link to="/auth/register" className={styles.link}>
+                  <button
+                    className={`${styles.button} ${styles.createAccountButton}`}
+                  >
+                    Создать аккаунт
+                  </button>
                 </Link>
               </>
             )}
           </div>
         </div>
-      </Container>
+      </div>
     </div>
   );
 };

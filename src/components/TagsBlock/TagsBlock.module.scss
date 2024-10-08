@@ -1,6 +1,10 @@
 .container {
-  cursor: pointer;
   position: relative;
+}
+
+// Убираем курсор по умолчанию для десктопа
+.title {
+  cursor: default;
 }
 
 .list {
@@ -15,4 +19,11 @@
 
 .hide {
   max-height: 0;
+}
+
+// В мобильной версии активируем pointer на заголовке
+@media (max-width: 900px) {
+  .title {
+    cursor: pointer;
+  }
 }
