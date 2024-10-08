@@ -32,8 +32,8 @@ export const AddPost = () => {
 
   const isEditing = !!id;
 
-    // Определяем, является ли устройство мобильным
-    const isMobile = useMediaQuery('(max-width:900px)');
+  // Определяем, является ли устройство мобильным
+  const isMobile = useMediaQuery('(max-width:900px)');
 
   const handleChangeFile = async (event) => {
     try {
@@ -108,7 +108,7 @@ export const AddPost = () => {
   const options = useMemo(
     () => ({
       spellChecker: false,
-      maxHeight: isMobile ? '200px' : '400px',
+      maxHeight: isMobile ? '100px' : '400px',
       autofocus: true,
       placeholder: 'Введите текст...',
       status: false,
@@ -117,7 +117,7 @@ export const AddPost = () => {
         delay: 1000,
       },
     }),
-    []
+    [isMobile]
   );
 
   // Проверяем, есть ли id поста в url, сохраняем все данные поста в стейты, когда находимся в редакторе поста
