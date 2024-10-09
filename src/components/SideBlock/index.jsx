@@ -11,8 +11,8 @@ export const SideBlock = ({ title, children, onShowComments, onShowTags }) => {
   };
 
   return (
-    <Paper classes={{ root: styles.root }} onClick={handleShowItems}>
-      <Typography variant="h6" classes={{ root: styles.title }}>
+    <Paper classes={{ root: styles.root }} >
+      <Typography variant="h6" classes={{ root: styles.title }} onClick={handleShowItems}>
         {title}
       </Typography>
       {children}

@@ -26,6 +26,7 @@ export const PostsByTags = () => {
 
   const isPostsLoading = posts.status === 'loading';
   const isTagsLoading = tags.status === 'loading';
+  const isCommentsLoading = comments.status === 'loading';
 
   // Определяем, является ли устройство мобильным
   const isMobile = useMediaQuery('(max-width:900px)');
@@ -88,16 +89,23 @@ export const PostsByTags = () => {
           <Grid xs={4} item>
             <TagsBlock tags={tags.items} isLoading={isTagsLoading} />
             {comments && (
-              <CommentsBlock comments={filteredComments} isLoading={false} />
+              <CommentsBlock
+                comments={filteredComments}
+                isLoading={isCommentsLoading}
+              />
             )}
           </Grid>
         )}
 
         {isMobile && (
           <Grid xs={12} item>
-            <TagsBlock tags={tags.items} isLoading={isTagsLoading} />
+            <TagsBlock tags={tags.items} isLoading={isTagsLoading} isMobile={isMobile}/>
             {comments && (
-              <CommentsBlock comments={filteredComments} isLoading={false} />
+              <CommentsBlock
+                comments={filteredComments}
+                isLoading={isCommentsLoading}
+                isMobile={isMobile}
+              />
             )}
           </Grid>
         )}

@@ -99,7 +99,7 @@ export const Home = () => {
             <TagsBlock tags={tags.items} isLoading={isTagsLoading} />
             <CommentsBlock
               comments={comments.items.slice(0, 5)}
-              isLoading={false}
+              isLoading={isCommentsLoading}
             />
           </Grid>
         )}
