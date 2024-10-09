@@ -58,9 +58,14 @@ export const CommentsBlock = ({
 
   return (
     <SideBlock
-      title={title}
-      className={styles.container}
-      onShowComments={handleShowComments}
+      title={
+        <div className={styles.title} onClick={handleShowComments}>
+          <span>{title}</span>{' '}
+          {isMobile && (
+            <span className={styles.arrow}>{commentsVisible ? '▲' : '▼'}</span>
+          )}
+        </div>
+      }
     >
       <List
         className={`${styles.list} ${

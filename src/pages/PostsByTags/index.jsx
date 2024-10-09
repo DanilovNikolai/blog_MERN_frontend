@@ -51,12 +51,12 @@ export const PostsByTags = () => {
       <div className={styles.root}>
         <div className={styles.wrapper}>
           <div className={styles.content}>
-            Найдены все посты по тэгу: <span>{tag}</span>
+            Найдены все посты по тэгу: <span>#{tag}</span>
           </div>
         </div>
       </div>
       <Grid container spacing={isMobile ? 0 : 4}>
-        <Grid xs={isMobile ? 12 : 8} item>
+        <Grid xs={isMobile ? 12 : 9} item>
           {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) =>
             isPostsLoading ? (
               <Post key={index} isLoading={true} />
@@ -86,7 +86,7 @@ export const PostsByTags = () => {
         </Grid>
 
         {!isMobile && (
-          <Grid xs={4} item>
+          <Grid xs={3} item>
             <TagsBlock tags={tags.items} isLoading={isTagsLoading} />
             {comments && (
               <CommentsBlock
@@ -99,7 +99,11 @@ export const PostsByTags = () => {
 
         {isMobile && (
           <Grid xs={12} item>
-            <TagsBlock tags={tags.items} isLoading={isTagsLoading} isMobile={isMobile}/>
+            <TagsBlock
+              tags={tags.items}
+              isLoading={isTagsLoading}
+              isMobile={isMobile}
+            />
             {comments && (
               <CommentsBlock
                 comments={filteredComments}

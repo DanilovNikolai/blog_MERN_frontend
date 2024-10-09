@@ -31,7 +31,6 @@ export const TagsBlock = ({ tags, isLoading = true, isMobile }) => {
   }, [dispatch, tag]);
 
   const handleShowTags = () => {
-    console.log(tagsVisible);
     if (isMobile) {
       setTagsVisible(!tagsVisible);
     }
@@ -39,14 +38,18 @@ export const TagsBlock = ({ tags, isLoading = true, isMobile }) => {
 
   return (
     <SideBlock
-      title="Популярные тэги"
+      title={
+        <div className={styles.title} onClick={handleShowTags}>
+          <span>Популярные тэги</span>{' '}
+          {isMobile && (
+            <span className={styles.arrow}>{tagsVisible ? '▲' : '▼'}</span>
+          )}
+        </div>
+      }
       className={styles.container}
-      onShowTags={handleShowTags}
     >
       <List
-        className={`${styles.list} ${
-          tagsVisible ? styles.show : styles.hide
-        }`}
+        className={`${styles.list} ${tagsVisible ? styles.show : styles.hide}`}
       >
         {(isLoading ? [...Array(5)] : tags).map((tag, index) => (
           <Link

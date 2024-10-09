@@ -1,5 +1,7 @@
 import React from 'react';
+// styles
 import styles from './SideBlock.module.scss';
+// mui
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 
@@ -11,8 +13,12 @@ export const SideBlock = ({ title, children, onShowComments, onShowTags }) => {
   };
 
   return (
-    <Paper classes={{ root: styles.root }} >
-      <Typography variant="h6" classes={{ root: styles.title }} onClick={handleShowItems}>
+    <Paper className={styles.root}>
+      <Typography
+        variant="h6"
+        className={styles.title}
+        onClick={handleShowItems}
+      >
         {title}
       </Typography>
       {children}

@@ -64,7 +64,7 @@ export const Home = () => {
       </Tabs>
 
       <Grid container spacing={isMobile ? 0 : 4}>
-        <Grid xs={isMobile ? 12 : 8} item>
+        <Grid xs={isMobile ? 12 : 9} item>
           {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) =>
             isPostsLoading ? (
               <Post key={index} isLoading={true} />
@@ -95,7 +95,7 @@ export const Home = () => {
         </Grid>
 
         {!isMobile && (
-          <Grid xs={4} item>
+          <Grid xs={3} item>
             <TagsBlock tags={tags.items} isLoading={isTagsLoading} />
             <CommentsBlock
               comments={comments.items.slice(0, 5)}
