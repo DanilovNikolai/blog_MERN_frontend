@@ -30,6 +30,7 @@ export const Home = () => {
 
   const isPostsLoading = posts.status === 'loading';
   const isTagsLoading = tags.status === 'loading';
+  const isCommentsLoading = comments.status === 'loading';
 
   useEffect(() => {
     dispatch(fetchPosts());
@@ -115,7 +116,7 @@ export const Home = () => {
             <Grid xs={12} item>
               <CommentsBlock
                 comments={comments.items.slice(0, 5)}
-                isLoading={false}
+                isLoading={isCommentsLoading}
                 isMobile={isMobile}
               />
             </Grid>

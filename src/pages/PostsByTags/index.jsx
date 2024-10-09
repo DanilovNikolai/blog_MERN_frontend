@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 // mui
 import Grid from '@mui/material/Grid';
+import { useMediaQuery } from '@mui/material';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPostsByTags, fetchTags } from '../../redux/slices/postsSlice';
@@ -25,6 +26,9 @@ export const PostsByTags = () => {
 
   const isPostsLoading = posts.status === 'loading';
   const isTagsLoading = tags.status === 'loading';
+
+  // Определяем, является ли устройство мобильным
+  const isMobile = useMediaQuery('(max-width:900px)');
 
   // Загружаем посты по тэгу
   useEffect(() => {
@@ -50,8 +54,8 @@ export const PostsByTags = () => {
           </div>
         </div>
       </div>
-      <Grid container spacing={4}>
-        <Grid xs={8} item>
+      <Grid container spacing={isMobile ? 0 : 4}>
+        <Grid xs={isMobile ? 12 : 8} item>
           {(isPostsLoading ? [...Array(5)] : posts.items).map((obj, index) =>
             isPostsLoading ? (
               <Post key={index} isLoading={true} />
@@ -79,12 +83,24 @@ export const PostsByTags = () => {
             )
           )}
         </Grid>
-        <Grid xs={4} item>
-          <TagsBlock tags={tags.items} isLoading={isTagsLoading} />
-          {comments && (
-            <CommentsBlock comments={filteredComments} isLoading={false} />
-          )}
-        </Grid>
+
+        {!isMobile && (
+          <Grid xs={4} item>
+            <TagsBlock tags={tags.items} isLoading={isTagsLoading} />
+            {comments && (
+              <CommentsBlock comments={filteredComments} isLoading={false} />
+            )}
+          </Grid>
+        )}
+
+        {isMobile && (
+          <Grid xs={12} item>
+            <TagsBlock tags={tags.items} isLoading={isTagsLoading} />
+            {comments && (
+              <CommentsBlock comments={filteredComments} isLoading={false} />
+            )}
+          </Grid>
+        )}
       </Grid>
     </>
   );
