@@ -59,11 +59,7 @@ export const Post = ({
       )}
       <img
         className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
-        src={
-          imageUrl
-            ? `${process.env.REACT_APP_API_URL}${imageUrl}`
-            : '/noimage.png'
-        }
+        src={imageUrl}
         alt={title}
       />
       <div className={styles.wrapper}>

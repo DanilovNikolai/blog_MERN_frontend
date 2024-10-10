@@ -13,6 +13,8 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 // axios
 import axios from '../../axios';
+// mui
+import { Avatar } from '@mui/material';
 
 export const Header = () => {
   const isAuth = useSelector(selectIsAuth);
@@ -60,13 +62,12 @@ export const Header = () => {
               <>
                 <div className={styles.userContainer}>
                   <div className={styles.avatarContainer}>
-                    <img
+                    <Avatar
                       onClick={() => inputFileRef.current.click()}
                       className={styles.avatar}
                       src={
-                        userData.avatarUrl
-                          ? `${process.env.REACT_APP_API_URL}${userData.avatarUrl}`
-                          : '/noavatar.png'
+                        userData?.avatarUrl &&
+                        `${process.env.REACT_APP_API_URL}${userData.avatarUrl}`
                       }
                       alt={userData.fullName}
                     />

@@ -40,6 +40,8 @@ export const FullPost = () => {
 
   useEffect(() => {
     dispatch(fetchComments());
+    console.log(process.env.REACT_APP_API_URL);
+    console.log(postsData.imageUrl);
   }, [dispatch]);
 
   useEffect(() => {
@@ -57,7 +59,7 @@ export const FullPost = () => {
         id={postsData._id}
         title={postsData.title}
         imageUrl={
-          postsData.imageUrl
+          postsData.imageUrl === undefined
             ? `${process.env.REACT_APP_API_URL}${postsData.imageUrl}`
             : '/noimage.png'
         }
