@@ -108,7 +108,7 @@ export const AddPost = () => {
   const options = useMemo(
     () => ({
       spellChecker: false,
-      maxHeight: isMobile ? '100px' : '400px',
+      maxHeight: isMobile ? '170px' : '300px',
       autofocus: true,
       placeholder: 'Введите текст...',
       status: false,
@@ -143,43 +143,43 @@ export const AddPost = () => {
   }
 
   return (
-    <Paper style={{ padding: 30 }}>
-      <Button
-        onClick={() => inputFileRef.current.click()}
-        variant="outlined"
-        size="large"
-      >
-        Загрузить превью
-      </Button>
-      <input
-        ref={inputFileRef}
-        type="file"
-        onChange={handleChangeFile}
-        hidden
-      />
-      {imageUrl && (
-        <>
+    <Paper style={isMobile ? { padding: 20, marginTop: 10 } : { padding: 30 }}>
+      <div className={styles.fileButtons}>
+        <Button
+          onClick={() => inputFileRef.current.click()}
+          variant="outlined"
+          size="large"
+          className={styles.uploadButton}
+          style={isMobile ? { padding: '3px 10px', fontSize: '12px' } : {}}
+        >
+          Загрузить превью
+        </Button>
+        <input
+          ref={inputFileRef}
+          type="file"
+          onChange={handleChangeFile}
+          hidden
+        />
+        {imageUrl && (
           <Button
             variant="contained"
             color="error"
             onClick={onClickRemoveImage}
-            className={styles.deleteButton}
+            style={isMobile ? { padding: '5px 10px', fontSize: '12px' } : {}}
           >
             Удалить
           </Button>
-          <img
-            className={styles.image}
-            src={
-              imageUrl
-                ? `${process.env.REACT_APP_API_URL}${imageUrl}`
-                : 'http://localhost:3000/noimage.png'
-            }
-            alt="Uploaded"
-          />
-        </>
-      )}
-      <br />
-      <br />
+        )}
+      </div>
+      <img
+        className={styles.image}
+        src={
+          imageUrl
+            ? `${process.env.REACT_APP_API_URL}${imageUrl}`
+            : '/noimage.png'
+        }
+        alt="Uploaded"
+      />
       <TextField
         classes={{ root: styles.title }}
         variant="standard"

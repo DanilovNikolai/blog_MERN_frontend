@@ -76,7 +76,7 @@ export const Home = () => {
                 imageUrl={
                   obj.imageUrl
                     ? `${process.env.REACT_APP_API_URL}${obj.imageUrl}`
-                    : 'http://localhost:3000/noimage.png'
+                    : '/noimage.png'
                 }
                 user={obj.user}
                 createdAt={formatDate(obj.createdAt)}

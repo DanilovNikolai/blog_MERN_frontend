@@ -2,8 +2,9 @@
   input {
     font-size: 42px;
     font-weight: 900;
-    @media (max-width: 900px){
-        font-size: 30px;
+
+    @media (max-width: 900px) {
+      font-size: 26px;
     }
   }
 
@@ -16,11 +17,25 @@
 }
 
 .image {
-  width: 100%;
+  width: 50%;
+  display: block;
+  margin: auto;
+  margin-bottom: 20px;
+
+  @media (max-width: 900px) {
+    scale: 1;
+    width: 70%;
+  }
 }
 
 .tags {
   margin: 15px 0;
+
+  @media (max-width: 900px) {
+    input {
+      font-size: 14px;
+    }
+  }
 }
 
 .editor {
@@ -36,17 +51,43 @@
       background-color: rgb(0 0 0 / 2%);
     }
   }
-}
 
-.buttons {
-  display: flex;
-  margin-bottom: 10px;
+  @media (max-width: 900px) {
+    margin: 20px -20px;
 
-  button {
-    margin-right: 15px;
+    :global {
+      .cm-s-easymde {
+        border: 0;
+        font-size: 18px;
+      }
+
+      .editor-toolbar {
+        border: 0;
+        background-color: rgb(0 0 0 / 2%);
+      }
+    }
+  }
+
+  @media (max-width: 410px) {
+    :global {
+      .editor-toolbar {
+        button {
+          width: 26px;
+        }
+      }
+    }
   }
 }
 
-.deleteButton {
-  margin-left: 10px;
+.fileButtons {
+  display: flex;
+  margin-bottom: 20px;
+  gap: 20px;
+  flex-wrap: wrap;
+
+  @media (max-width: 600px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }

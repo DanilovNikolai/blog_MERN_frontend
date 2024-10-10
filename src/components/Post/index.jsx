@@ -57,13 +57,15 @@ export const Post = ({
           </IconButton>
         </div>
       )}
-      {imageUrl && (
-        <img
-          className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
-          src={imageUrl}
-          alt={title}
-        />
-      )}
+      <img
+        className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
+        src={
+          imageUrl
+            ? `${process.env.REACT_APP_API_URL}${imageUrl}`
+            : '/noimage.png'
+        }
+        alt={title}
+      />
       <div className={styles.wrapper}>
         <UserInfo additionalText={createdAt} {...user} />
         <div className={styles.indention}>
