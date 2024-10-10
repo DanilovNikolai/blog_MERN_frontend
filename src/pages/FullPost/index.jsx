@@ -9,6 +9,7 @@ import axios from '../../axios';
 // redux
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchComments } from '../../redux/slices/commentsSlice';
+import { fetchPosts } from '../../redux/slices/postsSlice';
 // ReactMarkdown
 import ReactMarkdown from 'react-markdown';
 // utils
@@ -20,6 +21,7 @@ export const FullPost = () => {
   const [isLoading, setLoading] = useState(true);
   const params = useParams();
   const { comments } = useSelector((state) => state.comments);
+  const { posts } = useSelector((state) => state.posts);
   const userData = useSelector((state) => state.auth.userData);
   const filteredComments = comments.items?.filter(
     (comment) => comment.postId === params.id
@@ -40,8 +42,9 @@ export const FullPost = () => {
 
   useEffect(() => {
     dispatch(fetchComments());
+    dispatch(fetchPosts());
     console.log(process.env.REACT_APP_API_URL);
-    console.log(postsData.imageUrl);
+    console.log(posts.items.imageUrl);
   }, [dispatch]);
 
   useEffect(() => {
@@ -59,7 +62,7 @@ export const FullPost = () => {
         id={postsData._id}
         title={postsData.title}
         imageUrl={
-          postsData.imageUrl === undefined
+          posts.items
             ? `${process.env.REACT_APP_API_URL}${postsData.imageUrl}`
             : '/noimage.png'
         }

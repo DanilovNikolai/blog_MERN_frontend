@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 // clsx
 import clsx from 'clsx';
@@ -32,6 +32,19 @@ export const Post = ({
   isEditable,
 }) => {
   const dispatch = useDispatch();
+  const imageRef = useRef(null); // Ref для картинки
+  const [fitStyle, setFitStyle] = useState('contain'); // Состояние для object-fit
+
+  useEffect(() => {
+    if (imageRef.current) {
+      const imageHeight = imageRef.current.naturalHeight; // Получаем высоту картинки
+      if (imageHeight > 150) {
+        setFitStyle('cover'); // Если больше 150px, применяем cover
+      } else {
+        setFitStyle('contain'); // Иначе contain
+      }
+    }
+  }, [imageUrl]); // Вызов эффекта при изменении imageUrl
 
   if (isLoading) {
     return <PostSkeleton />;
@@ -58,9 +71,11 @@ export const Post = ({
         </div>
       )}
       <img
+        ref={imageRef}
         className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
         src={imageUrl}
         alt={title}
+        style={{ objectFit: fitStyle }} // Применяем динамическое значение object-fit
       />
       <div className={styles.wrapper}>
         <UserInfo additionalText={createdAt} {...user} />

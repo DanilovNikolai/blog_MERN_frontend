@@ -32,12 +32,12 @@ $blue: #4361ee;
   object-fit: cover;
 
   &Full {
-    min-height: 300px;
-    height: 100%;
+    max-height: 500px;
+    object-fit: cover;
   }
 
   @media (max-width: 900px) {
-    height: 200px;
+    max-height: 200px;
   }
 }
 
@@ -124,7 +124,7 @@ $blue: #4361ee;
     }
   }
 
-  @media (max-width: 900px){
+  @media (max-width: 900px) {
     margin: 5px 0 0 0;
   }
 }
