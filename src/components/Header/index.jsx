@@ -65,10 +65,7 @@ export const Header = () => {
                     <Avatar
                       onClick={() => inputFileRef.current.click()}
                       className={styles.avatar}
-                      src={
-                        userData?.avatarUrl &&
-                        `${process.env.REACT_APP_API_URL}${userData.avatarUrl}`
-                      }
+                      src={userData?.avatarUrl}
                       alt={userData.fullName}
                     />
                     <input
