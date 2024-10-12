@@ -173,11 +173,7 @@ export const AddPost = () => {
       </div>
       <img
         className={styles.image}
-        src={
-          imageUrl
-            ? `${process.env.REACT_APP_API_URL}${imageUrl}`
-            : '/noimage.png'
-        }
+        src={imageUrl ? imageUrl : '/noimage.png'}
         alt="Uploaded"
       />
       <TextField

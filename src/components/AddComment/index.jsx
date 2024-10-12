@@ -40,13 +40,7 @@ export const AddComment = ({ user }) => {
   return (
     <>
       <div className={styles.root}>
-        <Avatar
-          classes={{ root: styles.avatar }}
-          src={
-            user?.avatarUrl &&
-            `${process.env.REACT_APP_API_URL}${user.avatarUrl}`
-          }
-        />
+        <Avatar classes={{ root: styles.avatar }} src={user?.avatarUrl} />
         <div className={styles.form}>
           <TextField
             value={inputText}

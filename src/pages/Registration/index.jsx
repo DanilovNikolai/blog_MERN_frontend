@@ -90,10 +90,7 @@ export const Registration = () => {
         <Avatar
           sx={{ width: 100, height: 100 }}
           onClick={() => inputFileRef.current.click()}
-          src={
-            userData?.avatarUrl &&
-            `${process.env.REACT_APP_API_URL}${userData.avatarUrl}`
-          }
+          src={userData?.avatarUrl}
           className={styles.avatar}
           alt={userData?.fullName}
         />

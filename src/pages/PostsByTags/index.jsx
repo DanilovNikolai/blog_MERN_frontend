@@ -65,11 +65,7 @@ export const PostsByTags = () => {
                 key={index}
                 id={obj._id}
                 title={obj.title}
-                imageUrl={
-                  obj.imageUrl
-                    ? `${process.env.REACT_APP_API_URL}${obj.imageUrl}`
-                    : '/noimage.png'
-                }
+                imageUrl={obj.imageUrl ? obj.imageUrl : '/noimage.png'}
                 user={obj.user}
                 createdAt={formatDate(obj.createdAt)}
                 viewsCount={obj.viewsCount}

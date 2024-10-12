@@ -43,8 +43,6 @@ export const FullPost = () => {
   useEffect(() => {
     dispatch(fetchComments());
     dispatch(fetchPosts());
-    console.log(process.env.REACT_APP_API_URL);
-    console.log(posts.items.imageUrl);
   }, [dispatch]);
 
   useEffect(() => {
@@ -61,11 +59,7 @@ export const FullPost = () => {
       <Post
         id={postsData._id}
         title={postsData.title}
-        imageUrl={
-          posts.items
-            ? `${process.env.REACT_APP_API_URL}${postsData.imageUrl}`
-            : '/noimage.png'
-        }
+        imageUrl={posts.items ? postsData.imageUrl : '/noimage.png'}
         user={postsData.user}
         createdAt={formatDate(postsData.createdAt)}
         viewsCount={postsData.viewsCount} // Количество просмотров

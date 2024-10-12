@@ -83,7 +83,7 @@ export const CommentsBlock = ({
                     alt={comment.userId?.fullName}
                     src={
                       comment.userId?.avatarUrl
-                        ? `${process.env.REACT_APP_API_URL}${comment.userId.avatarUrl}`
+                        ? comment.userId.avatarUrl
                         : '/noavatar.png'
                     }
                   />
