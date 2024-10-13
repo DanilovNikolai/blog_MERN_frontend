@@ -34,10 +34,10 @@ $blue: #4361ee;
   &Full {
     max-height: 500px;
     object-fit: cover;
-  }
 
-  @media (max-width: 900px) {
-    max-height: 300px;
+    @media (max-width: 900px) {
+      max-height: 350px;
+    }
   }
 }
 
