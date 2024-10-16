@@ -171,11 +171,9 @@ export const AddPost = () => {
           </Button>
         )}
       </div>
-      <img
-        className={styles.image}
-        src={imageUrl ? imageUrl : '/noimage.png'}
-        alt="Uploaded"
-      />
+      {imageUrl && (
+        <img className={styles.image} src={imageUrl} alt="Uploaded" />
+      )}
       <TextField
         classes={{ root: styles.title }}
         variant="standard"
