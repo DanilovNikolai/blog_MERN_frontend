@@ -108,7 +108,7 @@ export const AddPost = () => {
   const options = useMemo(
     () => ({
       spellChecker: false,
-      maxHeight: isMobile ? '170px' : '300px',
+      maxHeight: isMobile ? '120px' : '300px',
       autofocus: true,
       placeholder: 'Введите текст...',
       status: false,

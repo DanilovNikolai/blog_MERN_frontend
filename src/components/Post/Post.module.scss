@@ -59,10 +59,10 @@ $blue: #4361ee;
 }
 
 .content {
-  margin: 30px 0 50px;
+  margin: 20px 0 40px;
 
   @media (max-width: 600px){
-    margin: 10px 0 20px;
+    margin: 5px 0 5px;
   }
 
   p {
@@ -73,11 +73,14 @@ $blue: #4361ee;
       font-size: 14px;
       line-height: 16px;
     }
+    @media (max-width: 600px){
+      margin: 7px 0 7px;
+    }
   }
 }
 
 .indention {
-  padding-left: 40px;
+  padding-left: 50px;
 
   h2 {
     font-size: 28px;
@@ -101,6 +104,10 @@ $blue: #4361ee;
       color: $blue;
       text-decoration: underline;
     }
+  }
+
+  @media (max-width: 600px){
+    margin: 5px 0px;
   }
 }
 
