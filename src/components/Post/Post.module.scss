@@ -28,14 +28,23 @@ $blue: #4361ee;
 
 .image {
   width: 100%;
-  max-height: 300px;
+  max-height: 400px;
   object-fit: cover;
+  background-color: #f8f8f8;
+
+  @media (max-width: 900px) {
+    max-height: 300px;
+  }
+  @media (max-width: 500px) {
+    max-height: 200px;
+  }
 
   &Full {
-    max-height: 500px;
-    object-fit: cover;
+    min-height: 500px;
+    object-fit: contain;
 
-    @media (max-width: 900px) {
+    @media (max-width: 600px) {
+      min-height: 0px;
       max-height: 350px;
     }
   }
@@ -43,6 +52,7 @@ $blue: #4361ee;
 
 .wrapper {
   padding: 10px 20px 20px;
+
   @media (max-width: 900px) {
     padding: 5px 8px 5px;
   }
@@ -51,9 +61,18 @@ $blue: #4361ee;
 .content {
   margin: 30px 0 50px;
 
+  @media (max-width: 600px){
+    margin: 10px 0 20px;
+  }
+
   p {
-    font-size: 22px;
+    font-size: 18px;
     line-height: 36px;
+
+    @media (max-width: 900px) {
+      font-size: 14px;
+      line-height: 16px;
+    }
   }
 }
 
@@ -61,26 +80,27 @@ $blue: #4361ee;
   padding-left: 40px;
 
   h2 {
-    font-size: 20px;
+    font-size: 28px;
+
+    @media (max-width: 900px) {
+      font-size: 24px;
+    }
+    @media (max-width: 600px) {
+      font-size: 20px;
+    }
   }
 }
 
 .title {
-  font-size: 28px;
-  margin: 0;
-
   a {
     text-decoration: none;
     color: #000;
+    transition: all 0.5s ease;
 
     &:hover {
       color: $blue;
+      text-decoration: underline;
     }
-  }
-
-  &Full {
-    font-size: 42px;
-    font-weight: 900;
   }
 }
 
@@ -94,9 +114,11 @@ $blue: #4361ee;
     font-size: 14px;
     margin-right: 15px;
     opacity: 0.5;
+    transition: all 0.5s ease;
 
     &:hover {
       opacity: 1;
+      scale: 1.1;
     }
 
     a {
