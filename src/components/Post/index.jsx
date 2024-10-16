@@ -48,9 +48,7 @@ export const Post = ({
     imageUrl && imageUrl.startsWith('https://storage.yandexcloud.net')
       ? imageUrl
       : '/noimage.png';
-
-  console.log(imageUrl);
-
+      
   return (
     <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
       {isEditable && (
