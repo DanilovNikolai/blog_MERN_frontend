@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 // clsx
 import clsx from 'clsx';
@@ -8,6 +8,8 @@ import DeleteIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import EyeIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import CommentIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
+import FavoriteIcon from '@mui/icons-material/FavoriteOutlined';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorderOutlined';
 // scss
 import styles from './Post.module.scss';
 // components
@@ -31,6 +33,7 @@ export const Post = ({
   isLoading,
   isEditable,
 }) => {
+  const [liked, setLiked] = useState(false);
   const dispatch = useDispatch();
 
   if (isLoading) {
@@ -43,12 +46,16 @@ export const Post = ({
     }
   };
 
+  const handleLike = () => {
+    setLiked(!liked);
+  };
+
   // Проверка на корректный URL
   const validImageUrl =
     imageUrl && imageUrl.startsWith('https://storage.yandexcloud.net')
       ? imageUrl
       : '/noimage.png';
-      
+
   return (
     <div className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
       {isEditable && (
@@ -94,6 +101,16 @@ export const Post = ({
             <li>
               <CommentIcon />
               <span>{commentsCount}</span>
+            </li>
+            <li>
+              <IconButton onClick={handleLike}>
+                {liked ? (
+                  <FavoriteIcon style={{ color: 'red' }} />
+                ) : (
+                  <FavoriteBorderIcon />
+                )}
+              </IconButton>
+              <span>{0}</span> {/* Количество лайков */}
             </li>
           </ul>
         </div>
