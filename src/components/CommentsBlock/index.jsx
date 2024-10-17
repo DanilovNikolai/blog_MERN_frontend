@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 // mui
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Clear';
 import { SideBlock } from '../SideBlock';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
@@ -14,6 +16,8 @@ import { useLocation } from 'react-router-dom';
 import { formatDate } from '../../utils/formatDate';
 // styles
 import styles from './CommentsBlock.module.scss';
+// redux
+import { useDispatch, useSelector } from 'react-redux';
 
 export const CommentsBlock = ({
   comments = [],
@@ -24,6 +28,8 @@ export const CommentsBlock = ({
 }) => {
   const location = useLocation();
   const [commentsVisible, setCommentsVisible] = useState(!isMobile);
+  const userData = useSelector((state) => state.auth.userData);
+  const dispatch = useDispatch();
 
   // Сбрасываем видимость комментариев при смене режима (mobile/desktop)
   useEffect(() => {
@@ -50,11 +56,16 @@ export const CommentsBlock = ({
   }
 
   const handleShowComments = () => {
-    console.log(commentsVisible);
     if (isMobile) {
       setCommentsVisible(!commentsVisible);
     }
   };
+
+  // const onClickRemove = () => {
+  //   if (window.confirm('Вы действительно хотите удалить статью?')) {
+  //     dispatch(fetchRemovePost(id));
+  //   }
+  // };
 
   return (
     <SideBlock
@@ -73,7 +84,7 @@ export const CommentsBlock = ({
         }`}
       >
         {(isLoading ? [...Array(5)] : resultComments)?.map((comment, index) => (
-          <React.Fragment key={comment._id}>
+          <div key={comment._id}>
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
                 {isLoading ? (
@@ -96,24 +107,26 @@ export const CommentsBlock = ({
                 </div>
               ) : (
                 <ListItemText
-                  primary={comment.fullName}
-                  secondary={comment.text}
-                />
+                primary={comment.fullName}
+                secondary={comment.text}
+                className={styles.text}
+              />
+              )}
+              {comment?.userId._id === userData?._id && (
+                <div className={styles.btnContainer}>
+                  <IconButton color="secondary">
+                    <DeleteIcon sx={{ color: 'red', opacity: 0.7 }} />
+                  </IconButton>
+                </div>
               )}
             </ListItem>
-            <div
-              style={{
-                textAlign: 'right',
-                marginRight: '15px',
-                marginBottom: '5px',
-              }}
-            >
+            <div className={styles.dataContainer}>
               <ListItemText secondary={formatDate(comment.createdAt)} />
             </div>
             {index < resultComments.length - 1 && (
               <Divider variant="inset" component="li" />
             )}
-          </React.Fragment>
+          </div>
         ))}
       </List>
 

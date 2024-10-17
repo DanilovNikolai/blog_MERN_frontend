@@ -47,3 +47,29 @@
     display: block;
   }
 }
+
+.btnContainer {
+  cursor: pointer;
+  scale: 0.9;
+  background-color: #ffe1e7;
+  border-radius: 10px;
+
+  button {
+    padding: 4px;
+  }
+
+  @media (max-width: 600px) {
+    scale: 0.7;
+  }
+}
+
+.dataContainer {
+  text-align: right;
+  margin-right: 15px;
+  margin-bottom: 5px;
+}
+
+.text {
+  white-space: normal;
+  word-wrap: break-word;
+}
