@@ -115,9 +115,10 @@ export const AddPost = () => {
       autosave: {
         enabled: true,
         delay: 1000,
+        uniqueId: id ? `post_${id}` : 'new_post', // Уникальный ID для автосохранения
       },
     }),
-    [isMobile]
+    [isMobile, id]
   );
 
   // Проверяем, есть ли id поста в url, сохраняем все данные поста в стейты, когда находимся в редакторе поста
