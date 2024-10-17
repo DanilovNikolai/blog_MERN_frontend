@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+// react-router-dom
+import { location } from 'react-router-dom';
 // mui
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Clear';
@@ -113,16 +115,17 @@ export const CommentsBlock = ({
                   className={styles.text}
                 />
               )}
-              {comment?.userId._id === userData?._id && (
-                <div className={styles.btnContainer}>
-                  <IconButton
-                    color="secondary"
-                    onClick={() => onClickRemove(comment._id)}
-                  >
-                    <DeleteIcon sx={{ color: 'red', opacity: 0.8 }} />
-                  </IconButton>
-                </div>
-              )}
+              {comment?.userId._id === userData?._id &&
+                location.pathname !== '/' && (
+                  <div className={styles.btnContainer}>
+                    <IconButton
+                      color="secondary"
+                      onClick={() => onClickRemove(comment._id)}
+                    >
+                      <DeleteIcon sx={{ color: 'red', opacity: 0.8 }} />
+                    </IconButton>
+                  </div>
+                )}
             </ListItem>
             <div className={styles.dataContainer}>
               <ListItemText secondary={formatDate(comment.createdAt)} />
