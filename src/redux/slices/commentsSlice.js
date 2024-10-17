@@ -19,6 +19,15 @@ export const fetchAddComment = createAsyncThunk(
   }
 );
 
+// Асинхронный экшен для удаления комментария
+export const fetchRemoveComment = createAsyncThunk(
+  'posts/fetchRemoveComment',
+  async (id) => {
+    await axios.delete(`/comments/${id}`);
+    return id;
+  }
+);
+
 const initialState = {
   comments: {
     items: [],
@@ -46,6 +55,19 @@ const commentsSlice = createSlice({
     },
     [fetchAddComment.rejected]: (state) => {
       state.comments.status = 'failed';
+    },
+    // Удаление комментария
+    [fetchRemoveComment.pending]: (state) => {
+      state.comments.status = 'loading';
+    },
+    [fetchRemoveComment.fulfilled]: (state, action) => {
+      state.comments.items = state.comments.items.filter(
+        (item) => item._id !== action.payload
+      );
+      state.comments.status = 'loaded';
+    },
+    [fetchRemoveComment.rejected]: (state) => {
+      state.comments.status = 'error';
     },
   },
 });

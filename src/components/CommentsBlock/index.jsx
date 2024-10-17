@@ -18,6 +18,7 @@ import { formatDate } from '../../utils/formatDate';
 import styles from './CommentsBlock.module.scss';
 // redux
 import { useDispatch, useSelector } from 'react-redux';
+import { fetchRemoveComment } from '../../redux/slices/commentsSlice';
 
 export const CommentsBlock = ({
   comments = [],
@@ -61,11 +62,11 @@ export const CommentsBlock = ({
     }
   };
 
-  // const onClickRemove = () => {
-  //   if (window.confirm('Вы действительно хотите удалить статью?')) {
-  //     dispatch(fetchRemovePost(id));
-  //   }
-  // };
+  const onClickRemove = (id) => {
+    if (window.confirm('Вы действительно хотите удалить комментарий?')) {
+      dispatch(fetchRemoveComment(id));
+    }
+  };
 
   return (
     <SideBlock
@@ -107,15 +108,18 @@ export const CommentsBlock = ({
                 </div>
               ) : (
                 <ListItemText
-                primary={comment.fullName}
-                secondary={comment.text}
-                className={styles.text}
-              />
+                  primary={comment.fullName}
+                  secondary={comment.text}
+                  className={styles.text}
+                />
               )}
               {comment?.userId._id === userData?._id && (
                 <div className={styles.btnContainer}>
-                  <IconButton color="secondary">
-                    <DeleteIcon sx={{ color: 'red', opacity: 0.7 }} />
+                  <IconButton
+                    color="secondary"
+                    onClick={() => onClickRemove(comment._id)}
+                  >
+                    <DeleteIcon sx={{ color: 'red', opacity: 0.8 }} />
                   </IconButton>
                 </div>
               )}
