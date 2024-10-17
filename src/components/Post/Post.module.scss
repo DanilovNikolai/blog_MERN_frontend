@@ -61,7 +61,7 @@ $blue: #4361ee;
 .content {
   margin: 20px 0 40px;
 
-  @media (max-width: 600px){
+  @media (max-width: 600px) {
     margin: 5px 0 5px;
   }
 
@@ -73,7 +73,7 @@ $blue: #4361ee;
       font-size: 14px;
       line-height: 16px;
     }
-    @media (max-width: 600px){
+    @media (max-width: 600px) {
       margin: 7px 0 7px;
     }
   }
@@ -106,7 +106,7 @@ $blue: #4361ee;
     }
   }
 
-  @media (max-width: 600px){
+  @media (max-width: 600px) {
     margin: 5px 0px;
   }
 }
@@ -199,4 +199,24 @@ $blue: #4361ee;
   border-radius: 10px;
   opacity: 0;
   transition: all 0.15s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 600px) {
+    opacity: 1;
+    top: 0px;
+    right: 0px;
+    width: 70px;
+    height: 35px;
+    border-radius: 0px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+
+  button {
+    @media (max-width: 600px){
+        padding: 3px;
+    }
+  }
 }
