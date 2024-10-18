@@ -35,6 +35,14 @@ export const fetchRemovePost = createAsyncThunk(
   }
 );
 
+export const fetchPostLikes = createAsyncThunk(
+  'posts/fetchPostLikes',
+  async (id) => {
+    const { data } = await axios.patch(`/posts/${id}/like`);
+    return { id, likesCount: data.likesCount, likedBy: data.likedBy };
+  }
+);
+
 const initialState = {
   posts: {
     items: [],
@@ -119,6 +127,15 @@ const postsSlice = createSlice({
     },
     [fetchRemovePost.rejected]: (state) => {
       state.posts.status = 'error';
+    },
+    // Обновление количества лайков
+    [fetchPostLikes.fulfilled]: (state, action) => {
+      const postIndex = state.posts.items.findIndex(
+        (post) => post._id === action.payload.id
+      );
+      if (postIndex !== -1) {
+        state.posts.items[postIndex].likesCount = action.payload.likesCount;
+      }
     },
   },
 });

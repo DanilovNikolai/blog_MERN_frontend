@@ -17,7 +17,7 @@ import { UserInfo } from '../UserInfo';
 import { PostSkeleton } from './Skeleton';
 // redux-toolkit
 import { useDispatch } from 'react-redux';
-import { fetchRemovePost } from '../../redux/slices/postsSlice';
+import { fetchRemovePost, fetchPostLikes } from '../../redux/slices/postsSlice';
 
 export const Post = ({
   id,
@@ -26,6 +26,7 @@ export const Post = ({
   imageUrl,
   user,
   viewsCount,
+  likesCount,
   commentsCount,
   tags,
   children,
@@ -33,7 +34,7 @@ export const Post = ({
   isLoading,
   isEditable,
 }) => {
-  const [liked, setLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState();
   const dispatch = useDispatch();
 
   if (isLoading) {
@@ -46,8 +47,13 @@ export const Post = ({
     }
   };
 
-  const handleLike = () => {
-    setLiked(!liked);
+  const handleLike = async () => {
+    try {
+      await dispatch(fetchPostLikes(id));
+      setIsLiked((prevLiked) => !prevLiked);
+    } catch (err) {
+      console.error('Ошибка при изменении лайка:', err);
+    }
   };
 
   // Проверка на корректный URL
@@ -104,13 +110,13 @@ export const Post = ({
             </li>
             <li>
               <IconButton onClick={handleLike}>
-                {liked ? (
+                {isLiked ? (
                   <FavoriteIcon style={{ color: 'red' }} />
                 ) : (
                   <FavoriteBorderIcon />
                 )}
               </IconButton>
-              <span>{0}</span> {/* Количество лайков */}
+              <span>{likesCount}</span>
             </li>
           </ul>
         </div>

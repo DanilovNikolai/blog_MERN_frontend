@@ -77,6 +77,7 @@ export const Home = () => {
                 user={obj.user}
                 createdAt={formatDate(obj.createdAt)}
                 viewsCount={obj.viewsCount}
+                likesCount={obj.likesCount}
                 commentsCount={
                   comments.items?.filter(
                     (comment) => comment.postId === obj._id
