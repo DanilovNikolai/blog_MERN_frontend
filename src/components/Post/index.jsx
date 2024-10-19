@@ -17,7 +17,7 @@ import styles from './Post.module.scss';
 import { UserInfo } from '../UserInfo';
 import { PostSkeleton } from './Skeleton';
 // redux-toolkit
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchRemovePost } from '../../redux/slices/postsSlice';
 // axios
 import axios from '../../axios';
@@ -40,6 +40,7 @@ export const Post = ({
 }) => {
   const [localLikesCount, setLocalLikesCount] = useState(likesCount);
   const [localIsLiked, setLocalIsLiked] = useState(isLiked);
+  const userData = useSelector((state) => state.auth.userData);
   const dispatch = useDispatch();
 
   if (isLoading) {
@@ -54,6 +55,10 @@ export const Post = ({
 
   const handleLike = async () => {
     try {
+      if (!userData) {
+        return;
+      }
+
       setLocalIsLiked(!localIsLiked);
       setLocalLikesCount((prev) => (localIsLiked ? prev - 1 : prev + 1));
       // Отправляем запрос на сервер для изменения лайка
