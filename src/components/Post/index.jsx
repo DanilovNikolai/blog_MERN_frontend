@@ -1,4 +1,5 @@
 import { useState } from 'react';
+// react router-dom
 import { Link } from 'react-router-dom';
 // clsx
 import clsx from 'clsx';
@@ -17,7 +18,9 @@ import { UserInfo } from '../UserInfo';
 import { PostSkeleton } from './Skeleton';
 // redux-toolkit
 import { useDispatch } from 'react-redux';
-import { fetchRemovePost, fetchPostLikes } from '../../redux/slices/postsSlice';
+import { fetchRemovePost } from '../../redux/slices/postsSlice';
+// axios
+import axios from '../../axios';
 
 export const Post = ({
   id,
@@ -27,6 +30,7 @@ export const Post = ({
   user,
   viewsCount,
   likesCount,
+  isLiked,
   commentsCount,
   tags,
   children,
@@ -34,7 +38,8 @@ export const Post = ({
   isLoading,
   isEditable,
 }) => {
-  const [isLiked, setIsLiked] = useState();
+  const [localLikesCount, setLocalLikesCount] = useState(likesCount);
+  const [localIsLiked, setLocalIsLiked] = useState(isLiked);
   const dispatch = useDispatch();
 
   if (isLoading) {
@@ -49,10 +54,14 @@ export const Post = ({
 
   const handleLike = async () => {
     try {
-      dispatch(fetchPostLikes(id));
-      setIsLiked((prevLiked) => !prevLiked);
+      setLocalIsLiked(!localIsLiked);
+      setLocalLikesCount((prev) => (localIsLiked ? prev - 1 : prev + 1));
+      // Отправляем запрос на сервер для изменения лайка
+      await axios.patch(`/posts/${id}/like`);
     } catch (err) {
       console.error('Ошибка при изменении лайка:', err);
+      setLocalIsLiked(isLiked);
+      setLocalLikesCount(likesCount);
     }
   };
 
@@ -110,13 +119,13 @@ export const Post = ({
             </li>
             <li>
               <IconButton onClick={handleLike}>
-                {isLiked ? (
+                {localIsLiked ? (
                   <FavoriteIcon style={{ color: 'red' }} />
                 ) : (
                   <FavoriteBorderIcon />
                 )}
               </IconButton>
-              <span>{likesCount}</span>
+              <span>{localLikesCount}</span>
             </li>
           </ul>
         </div>

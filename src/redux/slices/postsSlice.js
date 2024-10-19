@@ -30,11 +30,6 @@ export const fetchPostsByTags = createAsyncThunk(
   }
 );
 
-export const fetchTags = createAsyncThunk('posts/fetchTags', async () => {
-  const { data } = await axios.get('/tags');
-  return data;
-});
-
 export const fetchRemovePost = createAsyncThunk(
   'posts/fetchRemovePost',
   async (id) => {
@@ -42,6 +37,11 @@ export const fetchRemovePost = createAsyncThunk(
     return id;
   }
 );
+
+export const fetchTags = createAsyncThunk('posts/fetchTags', async () => {
+  const { data } = await axios.get('/tags');
+  return data;
+});
 
 export const fetchPostLikes = createAsyncThunk(
   'posts/fetchPostLikes',

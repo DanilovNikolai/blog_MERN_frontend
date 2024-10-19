@@ -78,6 +78,7 @@ export const Home = () => {
                 createdAt={formatDate(obj.createdAt)}
                 viewsCount={obj.viewsCount}
                 likesCount={obj.likesCount}
+                isLiked={obj.likedBy.includes(userData?._id)}
                 commentsCount={
                   comments.items?.filter(
                     (comment) => comment.postId === obj._id
