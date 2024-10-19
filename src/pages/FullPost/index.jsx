@@ -64,6 +64,7 @@ export const FullPost = () => {
         createdAt={formatDate(postsData.createdAt)}
         viewsCount={postsData.viewsCount} // Количество просмотров
         commentsCount={filteredComments.length} // Количество комментариев
+        likesCount={postsData.likesCount}
         tags={postsData.tags}
         isFullPost
       >

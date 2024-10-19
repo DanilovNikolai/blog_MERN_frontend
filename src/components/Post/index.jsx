@@ -49,7 +49,7 @@ export const Post = ({
 
   const handleLike = async () => {
     try {
-      await dispatch(fetchPostLikes(id));
+      dispatch(fetchPostLikes(id));
       setIsLiked((prevLiked) => !prevLiked);
     } catch (err) {
       console.error('Ошибка при изменении лайка:', err);

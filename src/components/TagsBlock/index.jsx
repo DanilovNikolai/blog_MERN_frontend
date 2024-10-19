@@ -27,7 +27,9 @@ export const TagsBlock = ({ tags, isLoading = true, isMobile }) => {
   }, [isMobile]);
 
   useEffect(() => {
-    dispatch(fetchPostsByTags());
+    if (tag) {
+      dispatch(fetchPostsByTags());
+    }
   }, [dispatch, tag]);
 
   const handleShowTags = () => {
