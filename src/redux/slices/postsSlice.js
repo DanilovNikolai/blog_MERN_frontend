@@ -6,6 +6,14 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   return data;
 });
 
+export const fetchPostById = createAsyncThunk(
+  'posts/fetchPostById',
+  async (id) => {
+    const { data } = await axios.get(`/posts/${id}`);
+    return data;
+  }
+);
+
 export const fetchPostsByViews = createAsyncThunk(
   'posts/fetchPostsByViews',
   async () => {
@@ -70,6 +78,25 @@ const postsSlice = createSlice({
     },
     [fetchPosts.rejected]: (state) => {
       state.posts.items = [];
+      state.posts.status = 'error';
+    },
+
+    // Получение конкретной статьи
+    [fetchPostById.pending]: (state) => {
+      state.posts.status = 'loading';
+    },
+    [fetchPostById.fulfilled]: (state, action) => {
+      const post = action.payload;
+      // Обновляем пост в массиве или добавляем его, если его нет
+      const index = state.posts.items.findIndex((p) => p._id === post._id);
+      if (index !== -1) {
+        state.posts.items[index] = post;
+      } else {
+        state.posts.items.push(post);
+      }
+      state.posts.status = 'loaded';
+    },
+    [fetchPostById.rejected]: (state) => {
       state.posts.status = 'error';
     },
 

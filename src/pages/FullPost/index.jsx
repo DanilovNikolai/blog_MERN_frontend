@@ -1,15 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 // components
 import { Post } from '../../components/Post';
 import { AddComment } from '../../components/AddComment';
 import { CommentsBlock } from '../../components/CommentsBlock';
-// axios
-import axios from '../../axios';
 // redux
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchComments } from '../../redux/slices/commentsSlice';
-import { fetchPosts } from '../../redux/slices/postsSlice';
+import { fetchPostById } from '../../redux/slices/postsSlice';
 // ReactMarkdown
 import ReactMarkdown from 'react-markdown';
 // utils
@@ -17,64 +15,47 @@ import { formatDate } from '../../utils/formatDate';
 
 export const FullPost = () => {
   const dispatch = useDispatch();
-  const [postsData, setPostsData] = useState({});
-  const [isLoading, setLoading] = useState(true);
   const params = useParams();
   const { comments } = useSelector((state) => state.comments);
   const { posts } = useSelector((state) => state.posts);
   const userData = useSelector((state) => state.auth.userData);
+
+  // находим пост по и комментарии к нему по id
+  const post = posts.items.find((post) => post._id === params.id);
   const filteredComments = comments.items?.filter(
     (comment) => comment.postId === params.id
   );
 
-  // Используем useCallback для мемоизации функции запроса данных
-  const fetchPostData = useCallback(async () => {
-    try {
-      const posts = await axios.get(`/posts/${params.id}`);
-      setPostsData(posts.data);
-      setLoading(false);
-    } catch (err) {
-      console.warn(err);
-      alert('Ошибка при получении данных');
-      setLoading(false);
-    }
-  }, [params.id]);
-
   useEffect(() => {
+    dispatch(fetchPostById(params.id));
     dispatch(fetchComments());
-    dispatch(fetchPosts());
-  }, [dispatch]);
+  }, [dispatch, params.id]);
 
-  useEffect(() => {
-    setLoading(true);
-    fetchPostData();
-  }, [fetchPostData]);
-
-  if (isLoading) {
-    return <Post isLoading={isLoading} isFullPost />;
+  if (!post) {
+    return <Post isLoading={true} isFullPost />;
   }
 
   return (
     <>
       <Post
-        id={postsData._id}
-        title={postsData.title}
-        imageUrl={posts.items ? postsData.imageUrl : '/noimage.png'}
-        user={postsData.user}
-        createdAt={formatDate(postsData.createdAt)}
-        viewsCount={postsData.viewsCount} // Количество просмотров
+        id={post._id}
+        title={post.title}
+        imageUrl={posts.items ? post.imageUrl : '/noimage.png'}
+        user={post.user}
+        createdAt={formatDate(post.createdAt)}
+        viewsCount={post.viewsCount} // Количество просмотров
         commentsCount={filteredComments.length} // Количество комментариев
-        likesCount={postsData.likesCount}
-        tags={postsData.tags}
+        likesCount={post.likesCount}
+        tags={post.tags}
         isFullPost
       >
-        <ReactMarkdown children={postsData.text} />
+        <ReactMarkdown children={post.text} />
       </Post>
       {(filteredComments.length || userData) && (
         <CommentsBlock
           comments={filteredComments} // Фильтруем комментарии по postId
           postId={params.id}
-          isLoading={isLoading}
+          isLoading={comments.status === 'loading'}
         >
           {userData && <AddComment user={userData} />}
         </CommentsBlock>
