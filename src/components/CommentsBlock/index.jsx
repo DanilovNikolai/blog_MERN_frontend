@@ -12,8 +12,6 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import Skeleton from '@mui/material/Skeleton';
-// router
-import { useLocation } from 'react-router-dom';
 // utils
 import { formatDate } from '../../utils/formatDate';
 // styles
@@ -87,7 +85,7 @@ export const CommentsBlock = ({
         }`}
       >
         {(isLoading ? [...Array(5)] : resultComments)?.map((comment, index) => (
-          <div key={comment._id}>
+          <div key={comment?._id}>
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
                 {isLoading ? (
@@ -115,7 +113,7 @@ export const CommentsBlock = ({
                   className={styles.text}
                 />
               )}
-              {comment?.userId._id === userData?._id &&
+              {comment?.userId?._id === userData?._id &&
                 location.pathname !== '/' && (
                   <div className={styles.btnContainer}>
                     <IconButton
