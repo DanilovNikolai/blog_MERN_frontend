@@ -7,6 +7,8 @@ Each user can write, edit and delete posts, comment, like and upload images.
 There is a search by the number of views and by tags.
 There is registration and authorization. Users can log in to have more options.
 
+The frontend part is deployed on **vercel.com**, backend - **heroku.com**.
+
 The application is based on **MERN stack**.
 All user data is stored in the **MongoDB** database. It is managed through the **mongoose** library.
 The frontend part is done using **React**, the backend - using **Node.js (Express.js)**.
@@ -34,7 +36,7 @@ Uploaded images (avatars and pictures of posts) are uploaded to the Yandex Objec
 
 ### **full post page**
 
-![Screenshot of the product fullpost page](/src/assets/screenshots/fullpostpage.png)
+![Screenshot of the product fullpost page](/src/assets/screenshots/fullpage.png)
 By clicking on any post, you can get to its own page, where you can see the entire information - whole image, message's text and list of comments where you can write your own comment.
 Only users with access can leave comments (**JWT** must be valid).
 
