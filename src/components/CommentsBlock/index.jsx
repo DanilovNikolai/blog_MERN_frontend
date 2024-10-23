@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // react-router-dom
-import { location } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 // mui
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Clear';
@@ -128,7 +128,7 @@ export const CommentsBlock = ({
                 )}
             </ListItem>
             <div className={styles.dataContainer}>
-              <ListItemText secondary={formatDate(comment.createdAt)} />
+              <ListItemText secondary={formatDate(comment?.createdAt)} />
             </div>
             {index < resultComments.length - 1 && (
               <Divider variant="inset" component="li" />
