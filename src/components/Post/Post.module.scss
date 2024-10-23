@@ -68,6 +68,8 @@ $blue: #4361ee;
   p {
     font-size: 18px;
     line-height: 36px;
+    display: flex;
+    flex-direction: column;
 
     @media (max-width: 900px) {
       font-size: 14px;
@@ -75,6 +77,19 @@ $blue: #4361ee;
     }
     @media (max-width: 600px) {
       margin: 7px 0 7px;
+    }
+  }
+
+  img {
+    margin-top: 15px;
+    align-self: center;
+    margin-right: 30px;
+    max-height: 20em;
+
+    @media (max-width: 600px) {
+      margin-top: 10px;
+      margin-right: 40px;
+      max-height: 15em;
     }
   }
 }
@@ -215,8 +230,8 @@ $blue: #4361ee;
   }
 
   button {
-    @media (max-width: 600px){
-        padding: 3px;
+    @media (max-width: 600px) {
+      padding: 3px;
     }
   }
 }
