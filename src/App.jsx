@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 // mui
 import Container from '@mui/material/Container';
 // routes
@@ -17,13 +17,45 @@ import {
 // redux-toolkit
 import { useDispatch } from 'react-redux';
 import { fetchAuthMe } from './redux/slices/authSlice';
+// axios
+import axios from './axios';
 
 function App() {
   const dispatch = useDispatch();
+  const [isServerOnline, setIsServerOnline] = useState(false);
+
+  useEffect(() => {
+    const checkServerStatus = async () => {
+      try {
+        await axios.get(`${process.env.REACT_APP_API_URL}/posts`);
+        setIsServerOnline(true);
+      } catch (error) {
+        console.error('Сервер недоступен:', error);
+        setIsServerOnline(false);
+      }
+    };
+
+    checkServerStatus();
+  }, []);
 
   useEffect(() => {
     dispatch(fetchAuthMe());
   }, [dispatch]);
+
+  if (!isServerOnline) {
+    return (
+      <Container maxWidth="lg">
+        <div>
+          <h1 style={{ margin: '250px 30px' }}>
+            Без паники! <br />
+            Сервер временно отключен, чтобы не платить за него, пока он не нужен
+            :) <br />
+            Если понадобится, я в любой момент его включу!
+          </h1>
+        </div>
+      </Container>
+    );
+  }
 
   return (
     <>
