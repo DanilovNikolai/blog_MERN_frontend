@@ -1,70 +1,74 @@
-# Getting Started with Create React App
+# **Blog-for-friends**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## **App description:**
 
-## Available Scripts
+This is small blogging SPA app, where people can write their posts.
+Each user can write, edit and delete posts, comment, like and upload images. 
+There is a search by the number of views and by tags.
+There is registration and authorization. Users can log in to have more options.
 
-In the project directory, you can run:
+The frontend part is deployed on **vercel.com**, backend - **heroku.com**.
 
-### `npm start`
+The application is based on **MERN stack**.
+All user data is stored in the **MongoDB** database. It is managed through the **mongoose** library.
+The frontend part is done using **React**, the backend - using **Node.js (Express.js)**.
+The main UI part was made by using **materialUI** lib.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### **reg and auth page**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![Screenshot of the registration modal](/src/assets/screenshots/regpage.png)
 
-### `npm test`
+All new users receive unique id using **_JWT_**, and the password is securely encrypted using the **_bcrypt_** library.
+All actions that require user registration go through the verification of the user's token.
+During authorization, the hashed user password is compared with the password in the database.
+Each field has an easy validation check.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### **homepage**
 
-### `npm run build`
+![Screenshot of the main page](/src/assets/screenshots/homepage.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+All user posts are rendered here.
+Each post has a list of tags, the number of views, comments and likes.
+Any post can be edited or deleted by a user who has access (**JWT** must be valid).
+There are tabs for sorting posts (by number of views and date).
+The most popular tags are placed to the right of the posts (selected from all existing tags). You can show posts with a specific tag.
+There is a block of recent comments under the list of tags.
+All post's data is stored in database and redux toolkit.
+Uploaded images (avatars and pictures of posts) are uploaded to the Yandex Object Storage via API (**_aws-sdk_** and **_multer_** lib used) and stored there.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### **full post page**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![Screenshot of the product fullpost page](/src/assets/screenshots/fullpage.png)
 
-### `npm run eject`
+By clicking on any post, you can get to its own page, where you can see the entire information - whole image, message's text and list of comments where you can write your own comment.
+Only users with access can leave comments (**JWT** must be valid).
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### **creating post page**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![Screenshot of the cart page](/src/assets/screenshots/addpostpage.png)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+All registered users can create their own posts.
+Each field has an easy validation check.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## **The following basic skills have been worked out:**
 
-## Learn More
+**Frontend**
+1. Using React as frontend language;
+2. Using the useState, useEffect, useRef and other hooks;
+3. Using onClick and onSubmit events on elements;
+4. Using conditional rendering with the ternary operator;
+5. Working with props;
+6. Using scss modules;
+7. Using "axios" for page routing with endpoints, sorting and searching for items and data fetching;
+8. Using "Redux Toolkit" for state management;
+9. Using "materialUi" lib;
+10. Making adaptations for different screen's sizes;
+11. Using a <Skeleton/> components as a content loader;
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Backend**
+1. Using Node.js (Express.js) as backend language;
+2. Сreating routes for queries, models and controllers as well as middleware for validation and verification of user authorization;
+3. Working with database "mongoDB" for storing web-site data;
+4. Working with "JWT" lib;
+5. Working with "multer" lib;
+6. Working with "aws-sdk" lib for Yandex Object Storage API;
