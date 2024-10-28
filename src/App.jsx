@@ -46,7 +46,7 @@ function App() {
     return (
       <Container maxWidth="lg">
         <div>
-          <h1 style={{ margin: '250px 30px' }}>
+          <h1 style={{ margin: '150px 30px' }}>
             Без паники! <br />
             Сервер временно отключен, чтобы не платить за него, пока он не нужен
             :) <br />
