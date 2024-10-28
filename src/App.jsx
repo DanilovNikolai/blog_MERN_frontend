@@ -23,6 +23,7 @@ import axios from './axios';
 function App() {
   const dispatch = useDispatch();
   const [isServerOnline, setIsServerOnline] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const checkServerStatus = async () => {
@@ -32,6 +33,8 @@ function App() {
       } catch (error) {
         console.error('Сервер недоступен:', error);
         setIsServerOnline(false);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -41,6 +44,10 @@ function App() {
   useEffect(() => {
     dispatch(fetchAuthMe());
   }, [dispatch]);
+
+  if (isLoading) {
+    return;
+  }
 
   if (!isServerOnline) {
     return (
